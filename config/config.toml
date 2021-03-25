@@ -1,0 +1,43 @@
+
+[server]
+	Address        = ":10086"
+	ServerAgent    = "Gf-Vben"
+	LogPath        = "./log/server"
+	NameToUriType  = 2
+	RouteOverWrite = true
+	AccessLogEnabled= false
+    ErrorLogEnabled=  false
+    DumpRouterMap=    true
+
+# 全局日志配置
+[logger]
+    Path   = "./log/"
+    Level  = "all"
+    Stdout = true
+
+
+# 数据库连接
+[database]
+    link  = "mysql:gf_vben:riyn8Lp2LN8t7wd8@tcp(127.0.0.1:3306)/gf_vben"
+    debug = true
+    # 数据库日志对象配置
+    [database.logger]
+        Path   = "./log/sql"
+        Level  = "all"
+        Stdout = true
+
+#[redis]
+#    default = "127.0.0.1:6379,0,122"
+
+#gfcli相关配置
+[gfcli]
+    [gfcli.build]
+        name     = "Gf-Vben"
+        version  = "1.0.0"
+        arch     = "amd64"
+        system   = "linux"
+        output   = ""
+        path     = "./bin"
+        extra    = "-ldflags \"-s -w\""
+    [[gfcli.gen.dao]]
+    link     = "mysql:gf_vben:riyn8Lp2LN8t7wd8@tcp(127.0.0.1:3306)/gf_vben"
