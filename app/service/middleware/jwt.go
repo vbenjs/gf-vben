@@ -8,7 +8,6 @@ import (
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/os/glog"
-	"net/http"
 	"time"
 )
 
@@ -30,7 +29,7 @@ func init() {
 		Key:             []byte("secret key"),
 		Timeout:         time.Minute * 5,
 		MaxRefresh:      time.Minute * 5,
-		IdentityKey:     "username",
+		IdentityKey:     "uuid",
 		TokenLookup:     "header: Authorization, query: token, cookie: jwt",
 		TokenHeadName:   "Bearer",
 		TimeFunc:        time.Now,
@@ -67,7 +66,7 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 // IdentityHandler sets the identity for JWT.
 func IdentityHandler(r *ghttp.Request) interface{} {
 	claims := jwt.ExtractClaims(r)
-	return claims["id"]
+	return claims["uuid"]
 }
 
 // Unauthorized is used to define customized Unauthorized callback function.
@@ -82,8 +81,8 @@ func Unauthorized(r *ghttp.Request, code int, message string) {
 // LoginResponse is used to define customized login-successful callback function.
 func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 	r.Response.WriteJson(g.Map{
-		"code":   http.StatusOK,
-		"token":  token,
+		"code":   0,
+		"result": token,
 		"expire": expire.Format(time.RFC3339),
 	})
 	r.ExitAll()
@@ -92,8 +91,8 @@ func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 // RefreshResponse is used to get a new token no matter current token is expired or not.
 func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 	r.Response.WriteJson(g.Map{
-		"code":   http.StatusOK,
-		"token":  token,
+		"code":   0,
+		"result": token,
 		"expire": expire.Format(time.RFC3339),
 	})
 	r.ExitAll()

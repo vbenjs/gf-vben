@@ -1,6 +1,8 @@
 package user
 
-import "github.com/gogf/gf/frame/g"
+import (
+	"github.com/gogf/gf/frame/g"
+)
 
 type Req struct {
 	Page     int `p:"page"`
@@ -13,7 +15,18 @@ type Query struct {
 }
 
 func (r Req) List() (g.Map, error) {
-	panic("implement me")
+	//u, err := dao.User.FindOne("id", r.Id)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//if u == nil {
+	//	return nil, gerror.New("用户不存在")
+	//}
+	//return g.Map{
+	//	"username": u.Username,
+	//	"roles":    []string{"admin"},
+	//}, nil
+	return nil, nil
 }
 
 func (r Req) Add() error {

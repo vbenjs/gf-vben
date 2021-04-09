@@ -2,8 +2,8 @@ package curd
 
 import (
 	"Gf-Vben/app/service/curd"
+	"Gf-Vben/app/service/response"
 	"Gf-Vben/app/service/user"
-	"Gf-Vben/library/response"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -28,22 +28,22 @@ func (c *Controller) Curd(r *ghttp.Request) {
 		if err != nil {
 			response.JsonExit(r, 3, err.Error())
 		}
-		response.JsonExit(r, 2, "", result)
+		response.JsonExit(r, 0, "", result)
 	case "add":
 		if err := cu.Add(); err != nil {
 			response.JsonExit(r, 3, err.Error())
 		}
-		response.JsonExit(r, 2, "新增成功")
+		response.JsonExit(r, 0, "新增成功")
 	case "edit":
 		if err := cu.Edit(); err != nil {
 			response.JsonExit(r, 3, err.Error())
 		}
-		response.JsonExit(r, 2, "修改成功")
+		response.JsonExit(r, 0, "修改成功")
 	case "del":
 		if err := cu.Del(); err != nil {
 			response.JsonExit(r, 3, err.Error())
 		}
-		response.JsonExit(r, 2, "删除成功")
+		response.JsonExit(r, 0, "删除成功")
 	default:
 		response.JsonExit(r, 3, "接口参数错误")
 	}
