@@ -8,7 +8,7 @@
 ### 基本组件
 
 1. 鉴权： jwt
-2. 权限控制：casbin //todo
+2. 权限控制：casbin 
 
 
 > 只提供了全局的curd接口 作为demo
@@ -30,6 +30,23 @@ create table app_user
     primary key (id, username)
 )
     charset = utf8mb4;
+
+
+```
+
+### casbin表sql语句
+
+```sql
+create table casbin_rule
+(
+    ptype varchar(10)  null,
+    v0    varchar(256) null,
+    v1    varchar(256) null,
+    v2    varchar(256) null,
+    v3    varchar(256) null,
+    v4    varchar(256) null,
+    v5    varchar(256) null
+);
 
 
 ```
