@@ -8,11 +8,23 @@
 ### 基本组件
 
 1. 鉴权： jwt
-2. 权限控制：casbin 
+>  https://github.com/gogf/gf-jwt
+2. 权限控制： casbin  
+>  https://github.com/casbin/casbin
+3. 雪花ID： 雪花漂移算法
+>  https://github.com/yitter/IdGenerator
 
 
-> 只提供了全局的curd接口 作为demo
-> 数据库自己创建
+## Mysql数据库相关
+
+* 只提供了全局的curd接口 作为demo
+* 数据库自己创建
+
+
+
+
+
+
 
 ### user表sql语句
 ```sql
