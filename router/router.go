@@ -22,7 +22,9 @@ func init() {
 	// 分组路由注册方式
 	s.Group("/api", func(group *ghttp.RouterGroup) {
 		group.Middleware(middleware.Auth)
-		group.ALL("/curd", new(curd.Controller).Curd)
 		group.ALL("/user/{.method}", new(user.Controller))
+		group.Middleware(middleware.Casbin)
+		group.ALL("/curd", new(curd.Controller).Curd)
+
 	})
 }

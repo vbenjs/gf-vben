@@ -30,7 +30,6 @@ func (r Req) List() (g.Map, error) {
 		"username": u.Username,
 		"roles":    []string{"admin"},
 	}, nil
-	return nil, nil
 }
 
 func (r Req) Add() error {
