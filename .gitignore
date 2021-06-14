@@ -16,7 +16,6 @@ bin/
 tmp/
 cbuild
 */.DS_Store
-config/config.toml
 main
 .vscode
 go.sum
