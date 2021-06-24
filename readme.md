@@ -2,8 +2,13 @@
 ## 前后端分离后台管理系统
 ### 本仓库为后端部分
 
-#### 后端语言：golang，后端框架：GoFrame
-#### 前端框架：Vben
+### 前端部分
+>https://github.com/vbenjs/gf-vben-admin
+
+#### 后端语言：golang
+#### 后端框架：[GoFrame](https://github.com/gogf/gf)
+#### 前端语言：Vue3.0
+#### 前端框架：[Vben Admin](https://github.com/anncwb/vue-vben-admin)
 
 ### 基本组件
 
