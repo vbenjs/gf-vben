@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/os/gtime"
 	"github.com/gogf/gf/util/gconv"
@@ -27,16 +28,21 @@ type Meta struct {
 }
 
 func (r *Req) List() ([]*Router, error) {
-	all, err := g.DB().Model("router").Order("parent").All()
+	all, err := g.DB().Model("router").Where("status", 1).Order("parent").All()
 	if err != nil {
 		return nil, err
 
 	}
 
+	return getRouterList(all), nil
+}
+
+func getRouterList(data gdb.Result) []*Router {
 	res := map[int]*Router{}
-	for _, record := range all {
+	for _, record := range data {
 		var router *Router
 		record.Struct(&router)
+
 		if gconv.Int(record.Map()["parent"]) == 0 {
 			router.Children = []*Router{}
 			res[gconv.Int(record.Map()["id"])] = router
@@ -46,9 +52,10 @@ func (r *Req) List() ([]*Router, error) {
 		v.Children = append(v.Children, router)
 		//g.Dump(v)
 	}
+	//TODO 路由排序
 	var result []*Router
 	for _, v := range res {
 		result = append(result, v)
 	}
-	return result, nil
+	return result
 }
