@@ -19,17 +19,21 @@ type Query struct {
 
 func (r Req) List() (g.Map, error) {
 
-	u, err := dao.AppUser.FindOne("id", r.Uuid)
+	u, err := dao.User.All()
 	if err != nil {
 		return nil, err
 	}
+
 	if u == nil {
 		return nil, gerror.New("用户不存在")
 	}
 	return g.Map{
-		"username": u.Username,
-		"roles":    []string{"admin"},
+		"items":    u,
+		"total":    1,
+		"page":     r.Page,
+		"pageSize": r.PageSize,
 	}, nil
+	//return g.Map{"list":[]g.Map{g.Map{}}}
 }
 
 func (r Req) Add() error {

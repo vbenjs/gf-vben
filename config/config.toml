@@ -15,10 +15,9 @@
     Level  = "all"
     Stdout = true
 
-
 # 数据库连接
 [database]
-    link  = "mysql:gf_vben:riyn8Lp2LN8t7wd8@tcp(127.0.0.1:3306)/gf_vben"
+    link  = "mysql:gf-vben:3dGkKJyDP4KaZews@tcp(47.116.71.73:3306)/gf-vben"
     debug = true
     # 数据库日志对象配置
     [database.logger]
@@ -40,4 +39,4 @@
         path     = "./bin"
         extra    = "-ldflags \"-s -w\""
     [[gfcli.gen.dao]]
-    link     = "mysql:gf_vben:riyn8Lp2LN8t7wd8@tcp(127.0.0.1:3306)/gf_vben"
+    link     = "mysql:gf-vben:3dGkKJyDP4KaZews@tcp(47.116.71.73:3306)/gf-vben"

@@ -3,6 +3,7 @@ package user
 import (
 	"Gf-Vben/app/service/response"
 	"Gf-Vben/app/service/user"
+	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
@@ -25,9 +26,9 @@ func (c *Controller) Info(r *ghttp.Request) {
 	if err := r.Parse(&req); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	}
-	res, err := req.List()
-	if err != nil {
-		response.JsonExit(r, 2, err.Error())
-	}
-	response.JsonExit(r, 0, "", res)
+
+	//if err != nil {
+	//	response.JsonExit(r, 2, err.Error())
+	//}
+	response.JsonExit(r, 0, "", g.Map{"username": "vben", "roles": []string{"admin"}})
 }

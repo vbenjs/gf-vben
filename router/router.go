@@ -2,6 +2,7 @@ package router
 
 import (
 	"Gf-Vben/app/api/curd"
+	"Gf-Vben/app/api/router"
 	"Gf-Vben/app/api/user"
 	"Gf-Vben/app/service/middleware"
 	"github.com/gogf/gf/frame/g"
@@ -23,7 +24,8 @@ func init() {
 	s.Group("/api", func(group *ghttp.RouterGroup) {
 		group.Middleware(middleware.Auth)
 		group.ALL("/user/{.method}", new(user.Controller))
-		group.Middleware(middleware.Casbin)
+		group.ALL("/router/{.method}", new(router.Controller))
+		//group.Middleware(middleware.Casbin)
 		group.ALL("/curd", new(curd.Controller).Curd)
 
 	})

@@ -14,7 +14,7 @@ type RegisterReq struct {
 }
 
 func (r *RegisterReq) Register() error {
-	result, err := dao.AppUser.FindOne("username", r.Username)
+	result, err := dao.User.FindOne("username", r.Username)
 	if err != nil {
 		return err
 	}
@@ -28,12 +28,11 @@ func (r *RegisterReq) Register() error {
 	if err != nil {
 		return err
 	}
-	u := model.AppUser{
+	u := model.User{
 		Username: r.Username,
 		Password: pw,
-		Status:   1,
 	}
-	if _, err := dao.AppUser.Save(u); err != nil {
+	if _, err := dao.User.Save(u); err != nil {
 		return err
 	}
 	return nil

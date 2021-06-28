@@ -33,7 +33,7 @@
 
 ### user表sql语句
 ```sql
-create table app_user
+create table user
 (
     id        int auto_increment comment 'primary id',
     username  varchar(120)         not null comment 'username',

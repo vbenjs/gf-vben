@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"Gf-Vben/app/dao"
+	"Gf-Vben/app/model"
 	jwt "github.com/gogf/gf-jwt"
 	"github.com/gogf/gf/crypto/gmd5"
 	"github.com/gogf/gf/errors/gerror"
@@ -27,8 +28,8 @@ func init() {
 	authMiddleware, err := jwt.New(&jwt.GfJWTMiddleware{
 		Realm:           "test zone",
 		Key:             []byte("secret key"),
-		Timeout:         time.Minute * 5,
-		MaxRefresh:      time.Minute * 5,
+		Timeout:         time.Minute * 60,
+		MaxRefresh:      time.Minute * 60,
 		IdentityKey:     "uuid",
 		TokenLookup:     "header: Authorization, query: token, cookie: jwt",
 		TokenHeadName:   "Bearer",
@@ -106,13 +107,10 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 	if err := r.Parse(req); err != nil {
 		return "", err
 	}
-
-	u, err := dao.AppUser.Where("username", req.Username).One()
+	var u model.User
+	err := dao.User.Where("username", req.Username).Scan(&u)
 	if err != nil {
 		return nil, err
-	}
-	if u == nil {
-		return nil, gerror.New("用户异常")
 	}
 	if u.Status == 0 {
 		return nil, gerror.New("用户已禁用")
