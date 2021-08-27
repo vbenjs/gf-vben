@@ -15,17 +15,20 @@ import (
 func init() {
 	s := g.Server()
 	s.BindHandler("/*", func(r *ghttp.Request) {
-
 	})
 	s.BindMiddleware("/*", middleware.CORS)
-	s.BindHandler("POST:/login", middleware.GfJWTMiddleware.LoginHandler)
+	middleware.Gtoken.Start()
+
+	//s.BindHandler("POST:/login", middleware.GfJWTMiddleware.LoginHandler)
 	s.BindHandler("POST:/register", user.Register)
 	// 分组路由注册方式
 	s.Group("/api", func(group *ghttp.RouterGroup) {
-		group.Middleware(middleware.Auth)
+		//middleware.Gtoken.Middleware(group)
+		//group.Middleware(middleware.Auth)
 		group.ALL("/user/{.method}", new(user.Controller))
 		group.ALL("/router/{.method}", new(router.Controller))
-		//group.Middleware(middleware.Casbin)
+		group.Middleware(middleware.Casbin)
+
 		group.ALL("/curd", new(curd.Controller).Curd)
 
 	})

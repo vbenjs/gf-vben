@@ -133,5 +133,6 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 
 func Auth(r *ghttp.Request) {
 	GfJWTMiddleware.MiddlewareFunc()(r)
+
 	r.Middleware.Next()
 }
