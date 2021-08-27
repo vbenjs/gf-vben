@@ -1,6 +1,6 @@
 
 [server]
-	Address        = ":10086"
+	Address        = ":10088"
 	ServerAgent    = "Gf-Vben"
 	LogPath        = "./log/server"
 	NameToUriType  = 2
