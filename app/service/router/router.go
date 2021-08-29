@@ -1,14 +1,16 @@
 package router
 
 import (
+	"Gf-Vben/app/service/casbin"
+	"fmt"
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/os/gtime"
 	"github.com/gogf/gf/util/gconv"
 )
 
-type Req struct {
-	Id int `p:"id"`
+type ListReq struct {
+	Id int `p:"uuid"`
 }
 
 type Router struct {
@@ -20,6 +22,8 @@ type Router struct {
 	Status    int        `orm:"status" json:"status"`
 	CreateAt  gtime.Time `orm:"create_at" json:"create_at"`
 	OrderNo   int        `orm:"order_no" json:"order_no"`
+	Id        int        `orm:"id" json:"id"`
+	Parent    int        `orm:"parent" json:"parent"`
 }
 
 type Meta struct {
@@ -27,8 +31,16 @@ type Meta struct {
 	Icon  string `orm:"icon" json:"icon"`
 }
 
-func (r *Req) List() ([]*Router, error) {
-	all, err := g.DB().Model("router").Where("status", 1).Order("parent").All()
+func (r *ListReq) List() ([]*Router, error) {
+	user, err := casbin.CE.GetRolesForUser("vben", "router")
+	forUser := casbin.CE.GetPermissionsForUserInDomain("vben", "router")
+	if err != nil {
+		return nil, err
+
+	}
+	fmt.Println(user)
+	fmt.Println(forUser)
+	all, err := g.DB().Model("router").Where("status", 1).Order("parent,orderNo desc").All()
 	if err != nil {
 		return nil, err
 

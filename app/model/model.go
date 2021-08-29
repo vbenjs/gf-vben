@@ -19,6 +19,28 @@ type CasbinRule struct {
 	V5    string `orm:"v5"    json:"v5"`    //
 }
 
+// Holder is the golang structure for table holder.
+type Holder struct {
+	UserId     int         `orm:"user_id,primary" json:"userId"`     //
+	ApiKey     string      `orm:"api_key"         json:"apiKey"`     //
+	Account    string      `orm:"account"         json:"account"`    //
+	CreateTime *gtime.Time `orm:"create_time"     json:"createTime"` //
+}
+
+// Node is the golang structure for table node.
+type Node struct {
+	Id            string      `orm:"id,primary"      json:"id"`            //
+	UserId        int         `orm:"user_id"         json:"userId"`        //
+	ApiKey        string      `orm:"api_key"         json:"apiKey"`        //
+	Ip            string      `orm:"ip"              json:"ip"`            //
+	ProxyPort     int         `orm:"proxy_port"      json:"proxyPort"`     //
+	GrpcPort      int         `orm:"grpc_port"       json:"grpcPort"`      //
+	LastAliveTime *gtime.Time `orm:"last_alive_time" json:"lastAliveTime"` //
+	CreateTime    *gtime.Time `orm:"create_time"     json:"createTime"`    //
+	State         int         `orm:"state"           json:"state"`         //
+	Offline       int         `orm:"offline"         json:"offline"`       //
+}
+
 // Router is the golang structure for table router.
 type Router struct {
 	Id        int         `orm:"id,primary" json:"id"`        //

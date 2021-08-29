@@ -1,7 +1,7 @@
 package boot
 
 import (
-	"Gf-Vben/app/service/middleware"
+	casbin2 "Gf-Vben/app/service/casbin"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
 	"github.com/gogf/gf/frame/g"
@@ -40,24 +40,24 @@ func initCasbin() {
 
 	modelFromString, err := model.NewModelFromString(`
 	[request_definition]
-	r = sub, obj, act
+	r = sub, dom, obj, act
 	
 	[policy_definition]
-	p = sub, obj, act
+	p = sub, dom, obj, act
 	
 	[role_definition]
-	g = _, _
+	g = _, _, _
 	
 	[policy_effect]
 	e = some(where (p.eft == allow))
 	
 	[matchers]
-	m = g(r.sub, p.sub) && r.obj == p.obj && r.act == p.act
+	m = g(r.sub, p.sub, r.dom) && r.dom == p.dom && r.obj == p.obj && r.act == p.act
 `)
 	if err != nil {
 		return
 	}
-	middleware.CE, err = casbin.NewEnforcer(modelFromString, a)
+	casbin2.CE, err = casbin.NewEnforcer(modelFromString, a)
 	if err != nil {
 		glog.Println(err)
 		return
