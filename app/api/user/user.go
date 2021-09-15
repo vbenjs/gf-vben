@@ -7,9 +7,6 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type Controller struct {
-}
-
 func Register(r *ghttp.Request) {
 	var req *user.RegisterReq
 	if err := r.Parse(&req); err != nil {
@@ -21,7 +18,7 @@ func Register(r *ghttp.Request) {
 	response.JsonExit(r, 0, "注册成功")
 
 }
-func (c *Controller) Info(r *ghttp.Request) {
+func Info(r *ghttp.Request) {
 	var req *user.Req
 	if err := r.Parse(&req); err != nil {
 		response.JsonExit(r, 1, err.Error())

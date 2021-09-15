@@ -6,10 +6,7 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type Controller struct {
-}
-
-func (c *Controller) List(r *ghttp.Request) {
+func List(r *ghttp.Request) {
 	var req router.ListReq
 	if err := r.Parse(&req); err != nil {
 		response.JsonExit(r, 1, err.Error())

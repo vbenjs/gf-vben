@@ -83,7 +83,7 @@ func Unauthorized(r *ghttp.Request, code int, message string) {
 func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
 	r.Response.WriteJson(g.Map{
 		"code":   0,
-		"result": token,
+		"result": g.Map{"token": token},
 		"expire": expire.Format(time.RFC3339),
 	})
 	r.ExitAll()

@@ -9,17 +9,18 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type Controller struct {
+type Req struct {
 	Interface string `p:"i" v:"required"`
 	Action    string `p:"a" v:"required"`
 }
 
-func (c *Controller) Curd(r *ghttp.Request) {
-	if err := r.Parse(&c); err != nil {
+func Curd(r *ghttp.Request) {
+	var params Req
+	if err := r.Parse(&params); err != nil {
 		response.JsonExit(r, 1, err.Error())
 	}
 	var cu curd.Curd
-	switch c.Interface {
+	switch params.Interface {
 	case "user":
 		req := new(user.Req)
 		cu = req
@@ -35,7 +36,7 @@ func (c *Controller) Curd(r *ghttp.Request) {
 	if err := r.Parse(cu); err != nil {
 		response.JsonExit(r, 3, err.Error())
 	}
-	switch c.Action {
+	switch params.Action {
 	case "list":
 		result, err := cu.List()
 		if err != nil {
