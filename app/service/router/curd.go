@@ -10,6 +10,7 @@ type Req struct {
 	PageSize int `p:"page_size"`
 	Query
 }
+
 type Query struct {
 	Id        int    `p:"id"`
 	Uid       int    `p:"uid"`
@@ -38,23 +39,27 @@ func (r *Req) List() (g.Map, error) {
 		"pageSize": r.PageSize,
 	}, nil
 }
-func (r Req) Add() error {
+func (r *Req) Add() error {
 	if _, err := dao.Router.Data(r).Save(); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (r Req) Edit() error {
+func (r *Req) Edit() error {
 	if _, err := dao.Router.Where("id", r.Id).Data(r).Save(); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (r Req) Del() error {
+func (r *Req) Del() error {
 	if _, err := dao.Router.Where("id", r.Id).Delete(); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (r *Req) Options() (g.Map, error) {
+	panic("implement me")
 }

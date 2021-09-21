@@ -7,4 +7,6 @@ type Curd interface {
 	Add() error
 	Edit() error
 	Del() error
+	Tree() (g.Map, error)
+	Options() (g.Map, error)
 }

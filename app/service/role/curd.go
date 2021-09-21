@@ -11,6 +11,7 @@ type Req struct {
 	PageSize int `p:"page_size"`
 	Query
 }
+
 type Query struct {
 	Id       int `p:"id"`
 	Username int `p:"username"`
@@ -39,14 +40,22 @@ func (r *Req) List() (g.Map, error) {
 		"pageSize": r.PageSize,
 	}, nil
 }
-func (r Req) Add() error {
+func (r *Req) Add() error {
 	panic("implement me")
 }
 
-func (r Req) Edit() error {
+func (r *Req) Edit() error {
 	panic("implement me")
 }
 
-func (r Req) Del() error {
+func (r *Req) Del() error {
+	panic("implement me")
+}
+
+func (r *Req) Tree() (g.Map, error) {
+	panic("implement me")
+}
+
+func (r *Req) Options() (g.Map, error) {
 	panic("implement me")
 }

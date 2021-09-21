@@ -9,3 +9,9 @@ func CORS(r *ghttp.Request) {
 	r.Response.CORS(corsOptions)
 	r.Middleware.Next()
 }
+
+// 全局获取context
+func Ctx(r *ghttp.Request) {
+	r.SetParam("ctx", r.GetCtx())
+	r.Middleware.Next()
+}

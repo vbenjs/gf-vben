@@ -2,7 +2,6 @@ package router
 
 import (
 	"Gf-Vben/app/api/curd"
-	"Gf-Vben/app/api/router"
 	"Gf-Vben/app/api/user"
 	"Gf-Vben/app/service/middleware"
 	"github.com/gogf/gf/frame/g"
@@ -17,6 +16,7 @@ func init() {
 	s.BindHandler("/*", func(r *ghttp.Request) {
 	})
 	s.BindMiddleware("/*", middleware.CORS)
+	s.BindMiddleware("/*", middleware.Ctx)
 	//middleware.Gtoken.Start()
 
 	s.BindHandler("POST:/login", middleware.GfJWTMiddleware.LoginHandler)
@@ -27,7 +27,6 @@ func init() {
 		group.Middleware(middleware.Auth)
 
 		group.ALL("/user/info", user.Info)
-		group.ALL("/router", router.List)
 		group.Middleware(middleware.Casbin)
 
 		group.ALL("/curd", curd.Curd)

@@ -43,6 +43,18 @@ func Curd(r *ghttp.Request) {
 			response.JsonExit(r, 4, err.Error())
 		}
 		response.JsonExit(r, 0, "", result)
+	case "tree":
+		result, err := cu.Tree()
+		if err != nil {
+			response.JsonExit(r, 4, err.Error())
+		}
+		response.JsonExit(r, 0, "", result)
+	case "options":
+		result, err := cu.Options()
+		if err != nil {
+			response.JsonExit(r, 4, err.Error())
+		}
+		response.JsonExit(r, 0, "", result)
 	case "add":
 		if err := cu.Add(); err != nil {
 			response.JsonExit(r, 4, err.Error())

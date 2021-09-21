@@ -1,17 +1,11 @@
 package router
 
 import (
-	"Gf-Vben/app/service/casbin"
-	"fmt"
 	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/os/gtime"
 	"github.com/gogf/gf/util/gconv"
 )
-
-type ListReq struct {
-	Id int `p:"uuid"`
-}
 
 type Router struct {
 	Path      string `orm:"path" json:"path"`
@@ -31,22 +25,20 @@ type Meta struct {
 	Icon  string `orm:"icon" json:"icon"`
 }
 
-func (r *ListReq) List() ([]*Router, error) {
-	user, err := casbin.CE.GetRolesForUser("vben", "router")
-	forUser := casbin.CE.GetPermissionsForUserInDomain("vben", "router")
+func (r *Req) Tree() (g.Map, error) {
+	//user, err := casbin.CE.GetRolesForUser("vben", "router")
+	//forUser := casbin.CE.GetPermissionsForUserInDomain("vben", "router")
+	//if err != nil {
+	//	return nil, err
+	//
+	//}
+	all, err := g.DB().Model("router").Where("status", 1).Order("parent").All()
 	if err != nil {
 		return nil, err
 
 	}
-	fmt.Println(user)
-	fmt.Println(forUser)
-	all, err := g.DB().Model("router").Where("status", 1).Order("parent,orderNo desc").All()
-	if err != nil {
-		return nil, err
 
-	}
-
-	return getRouterList(all), nil
+	return g.Map{"router": getRouterList(all)}, nil
 }
 
 func getRouterList(data gdb.Result) []*Router {
