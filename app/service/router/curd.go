@@ -33,7 +33,7 @@ func (r *Req) List() (g.Map, error) {
 	}
 
 	return g.Map{
-		"items":    getRouterList(all),
+		"items":    all,
 		"total":    1,
 		"page":     r.Page,
 		"pageSize": r.PageSize,

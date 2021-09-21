@@ -1,10 +1,8 @@
 package router
 
 import (
-	"github.com/gogf/gf/database/gdb"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/os/gtime"
-	"github.com/gogf/gf/util/gconv"
 )
 
 type Router struct {
@@ -32,34 +30,39 @@ func (r *Req) Tree() (g.Map, error) {
 	//	return nil, err
 	//
 	//}
-	all, err := g.DB().Model("router").Where("status", 1).Order("parent").All()
-	if err != nil {
+	var routers []*Router
+	if err := g.DB().Model("router").Where("status", 1).Order("parent").Scan(&routers); err != nil {
 		return nil, err
-
 	}
-
-	return g.Map{"router": getRouterList(all)}, nil
-}
-
-func getRouterList(data gdb.Result) []*Router {
 	res := map[int]*Router{}
-	for _, record := range data {
-		var router *Router
-		record.Struct(&router)
 
-		if gconv.Int(record.Map()["parent"]) == 0 {
-			router.Children = []*Router{}
-			res[gconv.Int(record.Map()["id"])] = router
-			continue
+	for _, router := range routers {
+
+		router.Children = make([]*Router, 0)
+		res[router.Id] = router
+		if r, ok := res[router.Parent]; ok {
+			if len(r.Children) > 0 {
+				if r.Children[0].OrderNo > router.OrderNo {
+					r.Children = append([]*Router{router}, r.Children...)
+					continue
+				}
+			}
+			r.Children = append(r.Children, router)
 		}
-		v := res[gconv.Int(record.Map()["parent"])]
-		v.Children = append(v.Children, router)
-		//g.Dump(v)
+
 	}
-	//TODO 路由排序
 	var result []*Router
 	for _, v := range res {
-		result = append(result, v)
+		if v.Parent == 0 {
+			if len(result) > 0 {
+				if result[0].OrderNo > v.OrderNo {
+					result = append([]*Router{v}, result...)
+					continue
+				}
+			}
+			result = append(result, v)
+		}
 	}
-	return result
+
+	return g.Map{"router": result}, nil
 }
