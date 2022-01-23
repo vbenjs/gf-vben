@@ -1,31 +1,63 @@
 package user
 
 import (
-	"Gf-Vben/app/service/response"
 	"Gf-Vben/app/service/user"
-	"github.com/gogf/gf/frame/g"
-	"github.com/gogf/gf/net/ghttp"
+	"Gf-Vben/app/util"
+	"context"
+	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
-func Register(r *ghttp.Request) {
-	var req *user.RegisterReq
-	if err := r.Parse(&req); err != nil {
-		response.JsonExit(r, 1, err.Error())
-	}
-	if err := req.Register(); err != nil {
-		response.JsonExit(r, 2, err.Error())
-	}
-	response.JsonExit(r, 0, "注册成功")
-
+type Api struct {
 }
-func Info(r *ghttp.Request) {
-	var req *user.Req
-	if err := r.Parse(&req); err != nil {
-		response.JsonExit(r, 1, err.Error())
+type LoginReq struct {
+	g.Meta `path:"/login" method:"post" summary:"执行登录请求" tags:"登录"`
+	user.LoginReq
+}
+
+func (Api) Login(ctx context.Context, req *LoginReq) (res *util.JsonRes, err error) {
+	token := req.Username + req.Password
+	g.Dump(token)
+	res = new(util.JsonRes)
+
+	if err := req.LoginReq.Login(); err != nil {
+		return res, gerror.WrapCode(util.Code(1), err)
+	}
+	res.Data = g.Map{"token": token}
+
+	return
+}
+
+type RegisterReq struct {
+	g.Meta `path:"/register" method:"post" summary:"执行注册请求" tags:"注册"`
+	user.RegisterReq
+}
+
+func (Api) Register(ctx context.Context, req *RegisterReq) (res *util.JsonRes, err error) {
+
+	res = new(util.JsonRes)
+	if err := req.RegisterReq.Register(); err != nil {
+		return nil, gerror.WrapCode(util.Code(1), err)
+	}
+	res.Message = "注册成功"
+
+	return
+}
+
+type Api2 struct {
+}
+type InfoReq struct {
+	g.Meta `path:"/info" method:"post" summary:"获取信息" `
+}
+
+func (Api2) Info(ctx context.Context, req *InfoReq) (res *util.JsonRes, err error) {
+
+	res = new(util.JsonRes)
+
+	res.Data = g.Map{
+		"username": "vben",
+		"role":     []string{"admin"},
 	}
 
-	//if err != nil {
-	//	response.JsonExit(r, 2, err.Error())
-	//}
-	response.JsonExit(r, 0, "", g.Map{"username": "vben", "roles": []string{"admin"}})
+	return
 }

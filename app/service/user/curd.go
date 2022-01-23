@@ -1,17 +1,18 @@
 package user
 
 import (
-	"Gf-Vben/app/dao"
-	"github.com/gogf/gf/errors/gerror"
-	"github.com/gogf/gf/frame/g"
+	"Gf-Vben/app/service/internal/dao"
+	"context"
+	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 type Req struct {
+	Ctx      context.Context
 	Page     int `p:"page"`
 	PageSize int `p:"page_size"`
 	Query
 }
-
 type Query struct {
 	Id       int `p:"id"`
 	Username int `p:"username"`
@@ -20,7 +21,7 @@ type Query struct {
 
 func (r *Req) List() (g.Map, error) {
 
-	u, err := dao.User.All()
+	u, err := dao.User.Ctx(r.Ctx).All()
 	if err != nil {
 		return nil, err
 	}

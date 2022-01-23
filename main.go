@@ -1,11 +1,11 @@
 package main
 
 import (
-	_ "Gf-Vben/boot"
-	_ "Gf-Vben/router"
-	"github.com/gogf/gf/frame/g"
+	_ "Gf-Vben/app"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 func main() {
+
 	g.Server().Run()
 }

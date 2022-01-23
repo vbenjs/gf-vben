@@ -1,13 +1,15 @@
 package router
 
 import (
-	"Gf-Vben/app/dao"
-	"github.com/gogf/gf/frame/g"
+	"Gf-Vben/app/service/internal/dao"
+	"context"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 type Req struct {
 	Page     int `p:"page"`
 	PageSize int `p:"page_size"`
+	Ctx      context.Context
 	Query
 }
 
@@ -40,21 +42,22 @@ func (r *Req) List() (g.Map, error) {
 	}, nil
 }
 func (r *Req) Add() error {
-	if _, err := dao.Router.Data(r).Save(); err != nil {
+
+	if _, err := dao.Router.Ctx(r.Ctx).Data(r).Insert(); err != nil {
 		return err
 	}
 	return nil
 }
 
 func (r *Req) Edit() error {
-	if _, err := dao.Router.Where("id", r.Id).Data(r).Save(); err != nil {
+	if _, err := dao.Router.Ctx(r.Ctx).Where("id", r.Id).Data(r).Update(); err != nil {
 		return err
 	}
 	return nil
 }
 
 func (r *Req) Del() error {
-	if _, err := dao.Router.Where("id", r.Id).Delete(); err != nil {
+	if _, err := dao.Router.Ctx(r.Ctx).Where("id", r.Id).Delete(); err != nil {
 		return err
 	}
 	return nil

@@ -1,6 +1,6 @@
 package curd
 
-import "github.com/gogf/gf/frame/g"
+import "github.com/gogf/gf/v2/frame/g"
 
 type Curd interface {
 	// List 列表
@@ -9,7 +9,7 @@ type Curd interface {
 	Add() error
 	// Edit 编辑
 	Edit() error
-	// Del 删除
+	// Del 删
 	Del() error
 	// Tree 返回树结构
 	Tree() (g.Map, error)

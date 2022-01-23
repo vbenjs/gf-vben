@@ -5,24 +5,20 @@
 package dao
 
 import (
-	"Gf-Vben/app/dao/internal"
+	"Gf-Vben/app/service/internal/dao/internal"
 )
 
-// casbinRuleDao is the manager for logic model data accessing and custom defined data operations functions management.
+// userDao is the data access object for table user.
 // You can define custom methods on it to extend its functionality as you wish.
-type casbinRuleDao struct {
-	*internal.CasbinRuleDao
+type userDao struct {
+	*internal.UserDao
 }
 
 var (
-	// CasbinRule is globally public accessible object for table casbin_rule operations.
-	CasbinRule casbinRuleDao
-)
-
-func init() {
-	CasbinRule = casbinRuleDao{
-		internal.NewCasbinRuleDao(),
+	// User is globally public accessible object for table user operations.
+	User = userDao{
+		internal.NewUserDao(),
 	}
-}
+)
 
 // Fill with you ideas below.

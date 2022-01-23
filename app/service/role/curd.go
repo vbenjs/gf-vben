@@ -3,7 +3,7 @@ package role
 import (
 	"Gf-Vben/app/service/casbin"
 	"fmt"
-	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 type Req struct {

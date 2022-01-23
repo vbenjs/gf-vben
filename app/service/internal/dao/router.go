@@ -5,24 +5,20 @@
 package dao
 
 import (
-	"Gf-Vben/app/dao/internal"
+	"Gf-Vben/app/service/internal/dao/internal"
 )
 
-// userDao is the manager for logic model data accessing and custom defined data operations functions management.
+// routerDao is the data access object for table router.
 // You can define custom methods on it to extend its functionality as you wish.
-type userDao struct {
-	*internal.UserDao
+type routerDao struct {
+	*internal.RouterDao
 }
 
 var (
-	// User is globally public accessible object for table user operations.
-	User userDao
-)
-
-func init() {
-	User = userDao{
-		internal.NewUserDao(),
+	// Router is globally public accessible object for table router operations.
+	Router = routerDao{
+		internal.NewRouterDao(),
 	}
-}
+)
 
 // Fill with you ideas below.
