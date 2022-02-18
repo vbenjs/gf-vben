@@ -15,18 +15,18 @@ type LoginReq struct {
 	user.LoginReq
 }
 
-func (Api) Login(ctx context.Context, req *LoginReq) (res *util.JsonRes, err error) {
-	token := req.Username + req.Password
-	g.Dump(token)
-	res = new(util.JsonRes)
-
-	if err := req.LoginReq.Login(); err != nil {
-		return res, gerror.WrapCode(util.Code(1), err)
-	}
-	res.Data = g.Map{"token": token}
-
-	return
-}
+//func (Api) Login(ctx context.Context, req *LoginReq) (res *util.JsonRes, err error) {
+//	token := req.Username + req.Password
+//	g.Dump(token)
+//	res = new(util.JsonRes)
+//
+//	if err := req.LoginReq.Login(); err != nil {
+//		return res, gerror.WrapCode(util.Code(1), err)
+//	}
+//	res.Data = g.Map{"token": token}
+//
+//	return
+//}
 
 type RegisterReq struct {
 	g.Meta `path:"/register" method:"post" summary:"执行注册请求" tags:"注册"`

@@ -1,14 +1,13 @@
 package app
 
 import (
-	_ "github.com/lib/pq"
+	_ "github.com/gogf/gf/contrib/drivers/pgsql/v2"
 	"github.com/yitter/idgenerator-go/idgen"
 )
 
 // 用于应用初始化。
 func init() {
 	//s := g.Server()
-
 	router()
 	initIdGenerator()
 	//initCasbin()

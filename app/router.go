@@ -16,11 +16,12 @@ func router() {
 	s := g.Server()
 
 	s.Use(util.ResponseHandler, middleware.CORS)
+	s.BindHandler("POST:/login", middleware.GfJWTMiddleware.LoginHandler)
 	s.Group("/", func(group *ghttp.RouterGroup) {
 		group.Bind(
 			new(user.Api),
 		)
-
+		group.Middleware(middleware.Auth)
 		group.Group("/user", func(group *ghttp.RouterGroup) {
 			group.Bind(
 				new(user.Api2),
@@ -29,6 +30,7 @@ func router() {
 
 	})
 	s.Group("/api", func(group *ghttp.RouterGroup) {
+		group.Middleware(middleware.Auth)
 		group.Bind(
 			new(curd.Api),
 		)
