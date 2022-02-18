@@ -22,11 +22,6 @@ func router() {
 			new(user.Api),
 		)
 		group.Middleware(middleware.Auth)
-		group.Group("/user", func(group *ghttp.RouterGroup) {
-			group.Bind(
-				new(user.Api2),
-			)
-		})
 
 	})
 	s.Group("/api", func(group *ghttp.RouterGroup) {
@@ -34,6 +29,11 @@ func router() {
 		group.Bind(
 			new(curd.Api),
 		)
+		group.Group("/user", func(group *ghttp.RouterGroup) {
+			group.Bind(
+				new(user.Api2),
+			)
+		})
 	})
 	//s.BindHandler("/login", .Login)
 	//s.BindHandler("POST:/register", user.Register)

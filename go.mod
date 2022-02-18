@@ -4,8 +4,9 @@ go 1.17
 
 require (
 	github.com/casbin/casbin/v2 v2.31.3
+	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.0.0-20220217150450-7812f41b4395
 	github.com/gogf/gf/v2 v2.0.0-rc2
-	github.com/lib/pq v1.10.4
+	github.com/jinmao88/gf-jwt v1.1.4
 	github.com/yitter/idgenerator-go v1.2.1
 )
 
@@ -22,10 +23,9 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-redis/redis/v8 v8.11.4 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
-	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.0.0-20220217150450-7812f41b4395 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
-	github.com/jinmao88/gf-jwt v1.1.4 // indirect
+	github.com/lib/pq v1.10.4 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mattn/go-runewidth v0.0.12 // indirect

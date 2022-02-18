@@ -47,7 +47,7 @@ func (Api) Register(ctx context.Context, req *RegisterReq) (res *util.JsonRes, e
 type Api2 struct {
 }
 type InfoReq struct {
-	g.Meta `path:"/info" method:"post" summary:"获取信息" `
+	g.Meta `path:"/info" method:"get" summary:"获取信息" `
 }
 
 func (Api2) Info(ctx context.Context, req *InfoReq) (res *util.JsonRes, err error) {
