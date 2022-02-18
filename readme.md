@@ -12,15 +12,15 @@
 
 ### 基本组件
 
-1. 鉴权： jwt || Gtoken
->  https://github.com/gogf/gf-jwt || https://github.com/goflyfox/gtoken
+1. 鉴权： jwt 
+>  https://github.com/jinmao88/gf-jwt 
 2. 权限控制： casbin  
 >  https://github.com/casbin/casbin
 3. 雪花ID： 雪花漂移算法
 >  https://github.com/yitter/IdGenerator
 4. 后端路由
 
-## Mysql数据库相关
+## Pgsql数据库相关
 
 * 只提供了全局的curd接口 作为demo
 * 数据库自己创建
