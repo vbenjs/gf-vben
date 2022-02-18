@@ -8,6 +8,7 @@ import (
 // 用于应用初始化。
 func init() {
 	//s := g.Server()
+
 	router()
 	initIdGenerator()
 	//initCasbin()
