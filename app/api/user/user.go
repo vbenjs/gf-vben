@@ -1,6 +1,7 @@
 package user
 
 import (
+	"Gf-Vben/app/service/middleware"
 	"Gf-Vben/app/service/user"
 	"Gf-Vben/app/util"
 	"context"
@@ -12,8 +13,34 @@ type Api struct {
 }
 type LoginReq struct {
 	g.Meta `path:"/login" method:"post" summary:"执行登录请求" tags:"登录"`
-	user.LoginReq
 }
+
+//type RefreshTokenReq struct {
+//	g.Meta `path:"/refresh_token" method:"post"`
+//}
+//
+//type AuthLogoutReq struct {
+//	g.Meta `path:"/logout" method:"post"`
+//}
+//
+
+func (Api) Login(ctx context.Context, req *LoginReq) (res *util.JsonRes, err error) {
+	res = new(util.JsonRes)
+	token, _ := middleware.GfJWTMiddleware.LoginHandler(ctx)
+	res.Data = g.Map{"token": token}
+	return
+}
+
+//func (Api) RefreshToken(ctx context.Context, req *api.AuthRefreshTokenReq) (res *api.AuthRefreshTokenRes, err error) {
+//	res = &api.AuthRefreshTokenRes{}
+//	res.Token, res.Expire = service.Auth().RefreshHandler(ctx)
+//	return
+//}
+//
+//func (Api) Logout(ctx context.Context, req *api.AuthLogoutReq) (res *api.AuthLogoutRes, err error) {
+//	service.Auth().LogoutHandler(ctx)
+//	return
+//}
 
 //func (Api) Login(ctx context.Context, req *LoginReq) (res *util.JsonRes, err error) {
 //	token := req.Username + req.Password
@@ -53,10 +80,9 @@ type InfoReq struct {
 func (Api2) Info(ctx context.Context, req *InfoReq) (res *util.JsonRes, err error) {
 
 	res = new(util.JsonRes)
-
 	res.Data = g.Map{
 		"username": "vben",
-		"role":     []string{"admin"},
+		"roles":    []string{"admin"},
 	}
 
 	return

@@ -21,11 +21,13 @@ func Code(code int) gcode.Code {
 
 func ResponseHandler(r *ghttp.Request) {
 	r.Middleware.Next()
+
 	// There's custom buffer content, it then exits current handler.
 	if r.Response.BufferLength() > 0 {
 		return
 	}
-	res, err := r.GetHandlerResponse()
+	res := r.GetHandlerResponse()
+	err := r.GetError()
 	if err != nil {
 		r.Response.WriteJson(JsonRes{
 			Code:    gerror.Code(err).Code(),

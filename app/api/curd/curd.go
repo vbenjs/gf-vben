@@ -55,9 +55,6 @@ func (Api) Curd(ctx context.Context, req *CurdReq) (res *util.JsonRes, err error
 	default:
 		err = gerror.NewCode(util.Code(3), "接口参数错误")
 	}
-	if err != nil {
-		return nil, gerror.NewCode(util.Code(3), err.Error())
-	}
 	return
 
 }

@@ -4,9 +4,9 @@ go 1.17
 
 require (
 	github.com/casbin/casbin/v2 v2.31.3
-	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.0.0-20220217150450-7812f41b4395
-	github.com/gogf/gf/v2 v2.0.0-rc2
-	github.com/jinmao88/gf-jwt v1.1.4
+	github.com/gogf/gf-jwt/v2 v2.0.1
+	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.0.0-20220308145156-8f326dcac554
+	github.com/gogf/gf/v2 v2.0.2
 	github.com/yitter/idgenerator-go v1.2.1
 )
 
@@ -15,7 +15,6 @@ require (
 	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/clbanning/mxj/v2 v2.5.5 // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
@@ -23,6 +22,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-redis/redis/v8 v8.11.4 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
+	github.com/golang-jwt/jwt/v4 v4.3.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
 	github.com/lib/pq v1.10.4 // indirect

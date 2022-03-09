@@ -3,13 +3,13 @@ package middleware
 import (
 	"Gf-Vben/app/model/entity"
 	"Gf-Vben/app/service/internal/dao"
+	"Gf-Vben/app/service/user"
 	"context"
+	jwt "github.com/gogf/gf-jwt/v2"
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
-	"github.com/gogf/gf/v2/os/glog"
-	jwt "github.com/jinmao88/gf-jwt"
 	"time"
 )
 
@@ -18,34 +18,27 @@ var (
 	GfJWTMiddleware *jwt.GfJWTMiddleware
 )
 
-type LoginReq struct {
-	Username string `p:"username" v:"required"`
-	Password string `p:"password" v:"required"`
+func Auth(r *ghttp.Request) {
+	GfJWTMiddleware.MiddlewareFunc()(r)
+	r.Middleware.Next()
 }
 
-// Initialization function,
-// rewrite this function to customized your own JWT settings.
 func init() {
-	authMiddleware, err := jwt.New(&jwt.GfJWTMiddleware{
+	auth := jwt.New(&jwt.GfJWTMiddleware{
 		Realm:           "test zone",
 		Key:             []byte("secret key"),
-		Timeout:         time.Minute * 60,
-		MaxRefresh:      time.Minute * 60,
+		Timeout:         time.Hour * 24 * 7,
+		MaxRefresh:      time.Hour * 24 * 7,
 		IdentityKey:     "uuid",
 		TokenLookup:     "header: Authorization, query: token, cookie: jwt",
 		TokenHeadName:   "Bearer",
 		TimeFunc:        time.Now,
 		Authenticator:   Authenticator,
-		LoginResponse:   LoginResponse,
-		RefreshResponse: RefreshResponse,
 		Unauthorized:    Unauthorized,
-		IdentityHandler: IdentityHandler,
 		PayloadFunc:     PayloadFunc,
+		IdentityHandler: IdentityHandler,
 	})
-	if err != nil {
-		glog.Fatal(context.Background(), "JWT Error:"+err.Error())
-	}
-	GfJWTMiddleware = authMiddleware
+	GfJWTMiddleware = auth
 }
 
 // PayloadFunc is a callback function that will be called during login.
@@ -65,14 +58,16 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 	return claims
 }
 
-// IdentityHandler sets the identity for JWT.
-func IdentityHandler(r *ghttp.Request) interface{} {
-	claims := jwt.ExtractClaims(r)
-	return claims["uuid"]
+// IdentityHandler get the identity from JWT and set the identity for every request
+// Using this function, by r.GetParam("id") get identity
+func IdentityHandler(ctx context.Context) interface{} {
+	claims := jwt.ExtractClaims(ctx)
+	return claims[GfJWTMiddleware.IdentityKey]
 }
 
 // Unauthorized is used to define customized Unauthorized callback function.
-func Unauthorized(r *ghttp.Request, code int, message string) {
+func Unauthorized(ctx context.Context, code int, message string) {
+	r := g.RequestFromCtx(ctx)
 	r.Response.WriteJson(g.Map{
 		"code":    code,
 		"message": message,
@@ -80,31 +75,13 @@ func Unauthorized(r *ghttp.Request, code int, message string) {
 	r.ExitAll()
 }
 
-// LoginResponse is used to define customized login-successful callback function.
-func LoginResponse(r *ghttp.Request, code int, token string, expire time.Time) {
-	r.Response.WriteJson(g.Map{
-		"code":   0,
-		"result": g.Map{"token": token},
-		"expire": expire.Format(time.RFC3339),
-	})
-	r.ExitAll()
-}
-
-// RefreshResponse is used to get a new token no matter current token is expired or not.
-func RefreshResponse(r *ghttp.Request, code int, token string, expire time.Time) {
-	r.Response.WriteJson(g.Map{
-		"code":   0,
-		"result": token,
-		"expire": expire.Format(time.RFC3339),
-	})
-	r.ExitAll()
-}
-
 // Authenticator is used to validate login parameters.
 // It must return user data as user identifier, it will be stored in Claim Array.
+// if your identityKey is 'id', your user data must have 'id'
 // Check error (e) to determine the appropriate error message.
-func Authenticator(r *ghttp.Request) (interface{}, error) {
-	req := new(LoginReq)
+func Authenticator(ctx context.Context) (interface{}, error) {
+	r := g.RequestFromCtx(ctx)
+	req := new(user.LoginReq)
 	if err := r.Parse(req); err != nil {
 		return "", err
 	}
@@ -130,10 +107,5 @@ func Authenticator(r *ghttp.Request) (interface{}, error) {
 		"uuid":     u.Id,
 		"roles":    "admin",
 	}, nil
-}
 
-func Auth(r *ghttp.Request) {
-	GfJWTMiddleware.MiddlewareFunc()(r)
-
-	r.Middleware.Next()
 }
