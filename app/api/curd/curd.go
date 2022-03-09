@@ -14,7 +14,7 @@ type Api struct {
 }
 
 type CurdReq struct {
-	g.Meta    `path:"/curd" method:"post" summary:"执行登录请求" tags:"登录"`
+	g.Meta    `path:"/curd" method:"post" summary:"Curd请求" tags:"Curd"`
 	Interface string `p:"i" v:"required"`
 	Action    string `p:"a" v:"required"`
 }

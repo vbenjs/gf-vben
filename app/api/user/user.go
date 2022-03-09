@@ -12,7 +12,7 @@ import (
 type Api struct {
 }
 type LoginReq struct {
-	g.Meta `path:"/login" method:"post" summary:"执行登录请求" tags:"登录"`
+	g.Meta `path:"/login" method:"post" summary:"登录请求" tags:"登录注册相关"`
 }
 
 //type RefreshTokenReq struct {
@@ -56,7 +56,7 @@ func (Api) Login(ctx context.Context, req *LoginReq) (res *util.JsonRes, err err
 //}
 
 type RegisterReq struct {
-	g.Meta `path:"/register" method:"post" summary:"执行注册请求" tags:"注册"`
+	g.Meta `path:"/register" method:"post" summary:"注册请求" tags:"登录注册相关"`
 	user.RegisterReq
 }
 
@@ -74,7 +74,7 @@ func (Api) Register(ctx context.Context, req *RegisterReq) (res *util.JsonRes, e
 type Api2 struct {
 }
 type InfoReq struct {
-	g.Meta `path:"/info" method:"get" summary:"获取信息" `
+	g.Meta `path:"/info" method:"get" summary:"通过Token获取用户信息" `
 }
 
 func (Api2) Info(ctx context.Context, req *InfoReq) (res *util.JsonRes, err error) {
