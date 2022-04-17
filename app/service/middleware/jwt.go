@@ -23,13 +23,13 @@ func Auth(r *ghttp.Request) {
 	r.Middleware.Next()
 }
 
-func init() {
+func initJwt() {
 	auth := jwt.New(&jwt.GfJWTMiddleware{
 		Realm:           "test zone",
 		Key:             []byte("secret key"),
 		Timeout:         time.Hour * 24 * 7,
 		MaxRefresh:      time.Hour * 24 * 7,
-		IdentityKey:     "uuid",
+		IdentityKey:     "uid",
 		TokenLookup:     "header: Authorization, query: token, cookie: jwt",
 		TokenHeadName:   "Bearer",
 		TimeFunc:        time.Now,
@@ -104,7 +104,7 @@ func Authenticator(ctx context.Context) (interface{}, error) {
 
 	return g.Map{
 		"username": u.Username,
-		"uuid":     u.Id,
+		"uid":      u.Id,
 		"roles":    "admin",
 	}, nil
 
