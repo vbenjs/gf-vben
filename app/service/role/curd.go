@@ -15,7 +15,7 @@ type Req struct {
 type Query struct {
 	Id       int `p:"id"`
 	Username int `p:"username"`
-	Uuid     int `p:"uuid"`
+	Uid      int `p:"uid"`
 }
 
 type Role struct {
