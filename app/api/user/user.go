@@ -87,3 +87,19 @@ func (Api2) Info(ctx context.Context, req *InfoReq) (res *util.JsonRes, err erro
 
 	return
 }
+
+type MenuReq struct {
+	g.Meta `path:"/menu" method:"get" summary:"获取用户菜单" `
+	user.MenuReq
+}
+
+func (Api2) Menu(ctx context.Context, req *MenuReq) (res *util.JsonRes, err error) {
+
+	res = new(util.JsonRes)
+	menu, err := req.Menu()
+	if err != nil {
+		return nil, gerror.WrapCode(util.Code(1), err)
+	}
+	res.Data = menu
+	return
+}

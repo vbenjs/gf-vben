@@ -2,10 +2,13 @@ package user
 
 import (
 	"Gf-Vben/app/model/entity"
+	"Gf-Vben/app/service/casbin"
 	"Gf-Vben/app/service/internal/dao"
+	"Gf-Vben/app/service/router"
 	"context"
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 type LoginReq struct {
@@ -70,4 +73,23 @@ func (r *RegisterReq) Register() error {
 		return err
 	}
 	return nil
+}
+
+type MenuReq struct {
+	Uid string `p:"uid"`
+	Ctx context.Context
+}
+
+func (r *MenuReq) Menu() ([]*router.Router, error) {
+	casbin.CE.LoadPolicy()
+	var p []string
+	permissions := casbin.CE.GetPermissionsForUserInDomain(r.Uid, "menu")
+	for _, permission := range permissions {
+		p = append(p, permission[2])
+	}
+	var routers []*router.Router
+	if err := g.DB().Model("router").Where("status", 1).Where("permission", p).Order("parent").Scan(&routers); err != nil {
+		return nil, err
+	}
+	return router.BuildRouter(routers), nil
 }
