@@ -2,6 +2,7 @@ package app
 
 import (
 	casbin2 "Gf-Vben/app/service/casbin"
+	"fmt"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
 	_ "github.com/gogf/gf/contrib/drivers/pgsql/v2"
@@ -52,7 +53,7 @@ func initCasbin() {
 		e = some(where (p.eft == allow))
 		
 		[matchers]
-		m = g(r.sub, p.sub, r.dom) && r.dom == p.dom && r.obj == p.obj && (r.act == p.act||p.act == "*")
+		m = g(r.sub, p.sub, r.dom) && r.dom == p.dom && r.obj == p.obj && (r.act == p.act||p.act == "*")||p.sub == "admin"
 	`)
 	if err != nil {
 		glog.Error(gctx.New(), err)
@@ -63,28 +64,7 @@ func initCasbin() {
 		glog.Error(gctx.New(), err)
 		return
 	}
-	//if _, err := casbin2.CE.AddPolicy("user", "curd", "tree"); err != nil {
-	//	glog.Error(gctx.New(), err)
-	//	return
-	//}
-	//casbin2.CE.AddRoleForUser("1", "user")
-	//if _, err := casbin2.CE.AddGroupingPolicy("1", "admin"); err != nil {
-	//	glog.Error(gctx.New(), err)
-	//	return
-	//}
-	//domains, err := casbin2.CE.GetAllDomains()
-	//
-	//fmt.Println(1, domains)
-	//actions := casbin2.CE.GetAllActions()
-	//fmt.Println(2, actions)
-	//objects := casbin2.CE.GetAllObjects()
-	//fmt.Println(3, objects)
-	//roles := casbin2.CE.GetAllRoles()
-	//fmt.Println(4, roles)
-	//enforce, err := casbin2.CE.Enforce("1", "curd", "router", "tree")
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//fmt.Println(enforce)
+	domain := casbin2.CE.GetPermissionsForUserInDomain("user", "curd")
+	fmt.Println(domain)
 	glog.Printf(gctx.New(), "Cabin初始化成功")
 }

@@ -12,7 +12,6 @@ import (
 // Router is the golang structure of table router for DAO operations like Where/Data.
 type Router struct {
 	g.Meta     `orm:"table:router, do:true"`
-	Id         interface{} //
 	Path       interface{} //
 	Name       interface{} //
 	Redirect   interface{} //
@@ -26,4 +25,5 @@ type Router struct {
 	UpdateAt   *gtime.Time //
 	DeleteAt   *gtime.Time //
 	Permission interface{} //
+	Id         interface{} //
 }

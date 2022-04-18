@@ -10,7 +10,6 @@ import (
 
 // Router is the golang structure for table router.
 type Router struct {
-	Id         int64       `json:"id"         ` //
 	Path       string      `json:"path"       ` //
 	Name       string      `json:"name"       ` //
 	Redirect   string      `json:"redirect"   ` //
@@ -24,4 +23,5 @@ type Router struct {
 	UpdateAt   *gtime.Time `json:"updateAt"   ` //
 	DeleteAt   *gtime.Time `json:"deleteAt"   ` //
 	Permission string      `json:"permission" ` //
+	Id         int64       `json:"id"         ` //
 }

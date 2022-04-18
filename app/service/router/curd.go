@@ -1,8 +1,10 @@
 package router
 
 import (
+	"Gf-Vben/app/model/entity"
 	"Gf-Vben/app/service/internal/dao"
 	"context"
+	tree "github.com/azhengyongqin/golang-tree-menu"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -65,4 +67,26 @@ func (r *Req) Del() error {
 
 func (r *Req) Options() (g.Map, error) {
 	panic("implement me")
+}
+
+type Routers []entity.Router
+
+func (r *Req) Tree() (g.Map, error) {
+
+	var routers Routers
+	if err := g.DB().Model("router").Where("status", 1).Order("parent").Scan(&routers); err != nil {
+		return nil, err
+	}
+	//res := map[int]*Router{}
+	//result = BuildRouter(routers)
+	generateTree := tree.GenerateTree(routers.ConvertToINodeArray(), nil)
+
+	return g.Map{"router": generateTree}, nil
+}
+
+func (p Routers) ConvertToINodeArray() (nodes []tree.INode) {
+	for _, v := range p {
+		nodes = append(nodes, v)
+	}
+	return
 }

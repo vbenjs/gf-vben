@@ -19,7 +19,6 @@ type RouterDao struct {
 
 // RouterColumns defines and stores column names for table router.
 type RouterColumns struct {
-	Id         string //
 	Path       string //
 	Name       string //
 	Redirect   string //
@@ -33,11 +32,11 @@ type RouterColumns struct {
 	UpdateAt   string //
 	DeleteAt   string //
 	Permission string //
+	Id         string //
 }
 
 //  routerColumns holds the columns for table router.
 var routerColumns = RouterColumns{
-	Id:         "id",
 	Path:       "path",
 	Name:       "name",
 	Redirect:   "redirect",
@@ -51,6 +50,7 @@ var routerColumns = RouterColumns{
 	UpdateAt:   "update_at",
 	DeleteAt:   "delete_at",
 	Permission: "permission",
+	Id:         "id",
 }
 
 // NewRouterDao creates and returns a new DAO object for table data access.

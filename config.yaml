@@ -7,7 +7,7 @@ server:
 database:
   default:
     link:   "pgsql:user=gfvben password=JBprEMNHJ7Md host=47.116.71.73 port=5432 dbname=gfvben sslmode=disable"
-    debug:  true
+    debug:  false
 
 gfcli:
   gen:

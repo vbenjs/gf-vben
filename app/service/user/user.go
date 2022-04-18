@@ -4,11 +4,11 @@ import (
 	"Gf-Vben/app/model/entity"
 	"Gf-Vben/app/service/casbin"
 	"Gf-Vben/app/service/internal/dao"
-	"Gf-Vben/app/service/router"
 	"context"
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 type LoginReq struct {
@@ -80,16 +80,64 @@ type MenuReq struct {
 	Ctx context.Context
 }
 
-func (r *MenuReq) Menu() ([]*router.Router, error) {
+func (r *MenuReq) Menu() ([]*Menu, error) {
 	casbin.CE.LoadPolicy()
 	var p []string
 	permissions := casbin.CE.GetPermissionsForUserInDomain(r.Uid, "menu")
 	for _, permission := range permissions {
 		p = append(p, permission[2])
 	}
-	var routers []*router.Router
+	var routers []*Menu
 	if err := g.DB().Model("router").Where("status", 1).Where("permission", p).Order("parent").Scan(&routers); err != nil {
 		return nil, err
 	}
-	return router.BuildRouter(routers), nil
+	return BuildRouter(routers), nil
+}
+
+type Menu struct {
+	Path      string `orm:"path" json:"path"`
+	Name      string `orm:"name" json:"name"`
+	Component string `orm:"component" json:"component"`
+	Meta      `json:"meta"`
+	Children  []*Menu    `json:"children"`
+	Status    int        `orm:"status" json:"status"`
+	CreateAt  gtime.Time `orm:"create_at" json:"create_at"`
+	OrderNo   int        `orm:"order_no" json:"order_no"`
+	Id        int        `orm:"id" json:"id"`
+	Parent    int        `orm:"parent" json:"parent"`
+}
+
+type Meta struct {
+	Title string `orm:"title" json:"title"`
+	Icon  string `orm:"icon" json:"icon"`
+}
+
+func BuildRouter(routers []*Menu) (result []*Menu) {
+	res := map[int]*Menu{}
+	for _, router := range routers {
+		router.Children = make([]*Menu, 0)
+		res[router.Id] = router
+		if r, ok := res[router.Parent]; ok {
+			if len(r.Children) > 0 {
+				if r.Children[0].OrderNo > router.OrderNo {
+					r.Children = append([]*Menu{router}, r.Children...)
+					continue
+				}
+			}
+			r.Children = append(r.Children, router)
+		}
+
+	}
+	for _, v := range res {
+		if v.Parent == 0 {
+			if len(result) > 0 {
+				if result[0].OrderNo > v.OrderNo {
+					result = append([]*Menu{v}, result...)
+					continue
+				}
+			}
+			result = append(result, v)
+		}
+	}
+	return
 }

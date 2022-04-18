@@ -2,6 +2,8 @@ package curd
 
 import (
 	"Gf-Vben/app/service/curd"
+	"Gf-Vben/app/service/permission"
+	"Gf-Vben/app/service/role"
 	"Gf-Vben/app/service/router"
 	"Gf-Vben/app/service/user"
 	"Gf-Vben/app/util"
@@ -27,8 +29,10 @@ func (Api) Curd(ctx context.Context, req *CurdReq) (res *util.JsonRes, err error
 		cu = new(user.Req)
 	case "router":
 		cu = new(router.Req)
-	//case "role":
-	//	//req := new(role.Req)
+	case "role":
+		cu = new(role.Req)
+	case "permission":
+		cu = new(permission.Req)
 	//	//cu = req
 	default:
 		return nil, gerror.NewCode(util.Code(1), "接口参数错误")
