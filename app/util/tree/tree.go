@@ -12,7 +12,9 @@ type Tree struct {
 	Leaf            bool        `json:"leaf"`             //叶子节点
 	Selected        bool        `json:"checked"`          //选中
 	PartialSelected bool        `json:"partial_selected"` //部分选中
-	Children        []Tree      `json:"children"`         //子节点
+	Children        []Tree      `json:"children"`
+	Value           interface{} `json:"value"` //子节点
+	Selectable      bool        `json:"selectable"`
 }
 
 // ConvertToINodeArray 其他的结构体想要生成菜单树，直接实现这个接口
@@ -28,6 +30,8 @@ type INode interface {
 	GetData() interface{}
 	// IsRoot 判断当前节点是否是顶层根节点
 	IsRoot() bool
+
+	GetTreeValue() interface{}
 }
 type INodes []INode
 
@@ -58,10 +62,7 @@ func GenerateTree(nodes, selectedNodes []INode) (trees []Tree) {
 	}
 
 	for _, v := range roots {
-		childTree := &Tree{
-			Title: v.GetTitle(),
-			Data:  v.GetData(),
-		}
+		childTree := buildTree(v)
 		// 递归之前，根据父节点确认 childTree 的选中状态
 		childTree.Selected = nodeSelected(v, selectedNodes, childTree.Children)
 		// 递归
@@ -79,10 +80,20 @@ func GenerateTree(nodes, selectedNodes []INode) (trees []Tree) {
 	return
 }
 
+func buildTree(node INode) *Tree {
+	return &Tree{
+		Title:      node.GetTitle(),
+		Data:       node.GetData(),
+		Value:      node.GetTreeValue(),
+		Selectable: true,
+	}
+}
+
 // recursiveTree 递归生成树结构
 // tree 递归的树对象
 // nodes 递归的节点
 // selectedNodes 选中的节点
+
 func recursiveTree(tree *Tree, nodes, selectedNodes []INode) {
 	data := tree.Data.(INode)
 
@@ -92,10 +103,7 @@ func recursiveTree(tree *Tree, nodes, selectedNodes []INode) {
 			continue
 		}
 		if data.GetId() == v.GetFatherId() {
-			childTree := &Tree{
-				Title: v.GetTitle(),
-				Data:  v.GetData(),
-			}
+			childTree := buildTree(v)
 			// 递归之前，根据子节点和父节点确认 childTree 的选中状态
 			childTree.Selected = nodeSelected(v, selectedNodes, childTree.Children) || tree.Selected
 			recursiveTree(childTree, nodes, selectedNodes)
@@ -216,9 +224,11 @@ type TreeArray interface {
 	GetData() interface{}
 	// IsRoot 判断当前节点是否是顶层根节点
 	IsRoot() bool
+
+	GetTreeValue() interface{}
 }
 
-func ConvertToINodeArray[T TreeArray](a []T) (res []INode) {
+func ConvertToINodeArray[T INode](a []T) (res []INode) {
 	for _, v := range a {
 		res = append(res, v)
 	}
