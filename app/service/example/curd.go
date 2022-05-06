@@ -1,6 +1,10 @@
 package example
 
 import (
+	"Gf-Vben/app/model/entity"
+	"Gf-Vben/app/service/internal/dao"
+	"Gf-Vben/app/util/options"
+	"Gf-Vben/app/util/tree"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -60,9 +64,25 @@ func (r *Req) Del() error {
 }
 
 func (r *Req) Tree() (g.Map, error) {
-	panic("implement me")
+	var res []entity.Permission
+	if err := dao.Permission.Ctx(r.Ctx).Scan(&res); err != nil {
+		return nil, err
+	}
+	generateTree := tree.GenerateTree(tree.ConvertToINodeArray(res), nil)
+	return g.Map{"tree": generateTree}, nil
 }
 
-func (r *Req) Options() (g.Map, error) {
-	panic("implement me")
+func (r *Req) Options() ([]options.Option, error) {
+	//var res []entity.Permission
+	//m := dao.Permission.Ctx(r.Ctx)
+	//if r.Type != "" {
+	//	m = m.Where(dao.Permission.Columns().Type, r.Type)
+	//}
+	//
+	//if err := m.OrderAsc(dao.Permission.Columns().Id).Scan(&res); err != nil {
+	//	return nil, err
+	//}
+	//
+	//return options.BuildOptions(res), nil
+	return []options.Option{}, nil
 }
