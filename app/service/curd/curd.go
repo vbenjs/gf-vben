@@ -1,6 +1,9 @@
 package curd
 
-import "github.com/gogf/gf/v2/frame/g"
+import (
+	"Gf-Vben/app/util/options"
+	"github.com/gogf/gf/v2/frame/g"
+)
 
 type Curd interface {
 	// List 列表
@@ -14,5 +17,5 @@ type Curd interface {
 	// Tree 返回树结构
 	Tree() (g.Map, error)
 	// Options 返回options
-	Options() (g.Map, error)
+	Options() ([]options.Option, error)
 }
