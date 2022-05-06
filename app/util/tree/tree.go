@@ -1,7 +1,6 @@
 package tree
 
 import (
-	"Gf-Vben/app/model/entity"
 	"sort"
 )
 
@@ -17,12 +16,12 @@ type Tree struct {
 	Selectable      bool        `json:"selectable"`
 }
 
-// ConvertToINodeArray 其他的结构体想要生成菜单树，直接实现这个接口
+// INode ConvertToINodeArray 其他的结构体想要生成菜单树，直接实现这个接口
 type INode interface {
 
 	// GetTitle 获取显示名字
 	GetTitle() string
-	// GetId获取id
+	// GetId 获取id
 	GetId() int
 	// GetFatherId 获取父id
 	GetFatherId() int
@@ -30,7 +29,7 @@ type INode interface {
 	GetData() interface{}
 	// IsRoot 判断当前节点是否是顶层根节点
 	IsRoot() bool
-
+	//GetTreeValue 设置Value值
 	GetTreeValue() interface{}
 }
 type INodes []INode
@@ -211,22 +210,22 @@ func nodePartialSelected(trees []Tree) bool {
 	return true
 }
 
-//为泛型创建的过度类型
-type TreeArray interface {
-	entity.Permission | entity.Router
-	// GetTitle 获取显示名字
-	GetTitle() string
-	// GetId获取id
-	GetId() int
-	// GetFatherId 获取父id
-	GetFatherId() int
-	// GetData 获取附加数据
-	GetData() interface{}
-	// IsRoot 判断当前节点是否是顶层根节点
-	IsRoot() bool
-
-	GetTreeValue() interface{}
-}
+//// TreeArray Inode无法设置类型 所以为泛型创建的过度类型
+//type TreeArray interface {
+//	entity.Permission | entity.Router
+//	// GetTitle 获取显示名字
+//	GetTitle() string
+//	// GetId获取id
+//	GetId() int
+//	// GetFatherId 获取父id
+//	GetFatherId() int
+//	// GetData 获取附加数据
+//	GetData() interface{}
+//	// IsRoot 判断当前节点是否是顶层根节点
+//	IsRoot() bool
+//
+//	GetTreeValue() interface{}
+//}
 
 func ConvertToINodeArray[T INode](a []T) (res []INode) {
 	for _, v := range a {
