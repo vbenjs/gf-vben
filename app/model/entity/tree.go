@@ -3,7 +3,7 @@ package entity
 import "github.com/gogf/gf/v2/util/gconv"
 
 func (p Permission) GetTitle() string {
-	return p.Tag
+	return p.Name
 }
 
 func (p Permission) GetId() int {
@@ -20,6 +20,9 @@ func (p Permission) GetData() interface{} {
 
 func (p Permission) IsRoot() bool {
 	return p.Parent == 0
+}
+func (p Permission) GetTreeValue() interface{} {
+	return p.Id
 }
 
 func (p Router) GetTitle() string {
@@ -40,4 +43,7 @@ func (p Router) GetData() interface{} {
 
 func (p Router) IsRoot() bool {
 	return p.Parent == 0
+}
+func (p Router) GetTreeValue() interface{} {
+	return p.Id == 0
 }

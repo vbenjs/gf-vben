@@ -2,6 +2,7 @@ package user
 
 import (
 	"Gf-Vben/app/service/internal/dao"
+	"Gf-Vben/app/util/options"
 	"context"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
@@ -53,6 +54,6 @@ func (r *Req) Tree() (g.Map, error) {
 	panic("implement me")
 }
 
-func (r *Req) Options() (g.Map, error) {
+func (r *Req) Options() ([]options.Option, error) {
 	panic("implement me")
 }

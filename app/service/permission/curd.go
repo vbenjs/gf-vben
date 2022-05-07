@@ -3,8 +3,10 @@ package permission
 import (
 	"Gf-Vben/app/model/entity"
 	"Gf-Vben/app/service/internal/dao"
+	"Gf-Vben/app/util/options"
+	"Gf-Vben/app/util/tree"
 	"context"
-	tree "github.com/azhengyongqin/golang-tree-menu"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -19,8 +21,9 @@ type Query struct {
 	Id     int    `p:"id"`
 	Uid    int    `p:"uid"`
 	Name   string `p:"name"`
-	Tag    string `p:"tag"`
+	Value  string `p:"value"`
 	Parent int    `p:"parent"`
+	Type   string `p:"type"`
 	Desc   string `p:"desc"`
 }
 
@@ -31,8 +34,12 @@ type Permissions []entity.Permission
 
 func (r *Req) List() (g.Map, error) {
 	var res Permissions
+	m := dao.Permission.Ctx(r.Ctx)
+	if r.Type != "" {
+		m = m.Where(dao.Permission.Columns().Type, r.Type)
+	}
 
-	if err := dao.Permission.Ctx(r.Ctx).Scan(&res); err != nil {
+	if err := m.OrderAsc(dao.Permission.Columns().Id).Scan(&res); err != nil {
 		return nil, err
 	}
 
@@ -44,33 +51,66 @@ func (r *Req) List() (g.Map, error) {
 	}, nil
 }
 func (r *Req) Add() error {
-	panic("implement me")
+	if _, err := dao.Permission.Ctx(r.Ctx).OmitEmptyData().Insert(r); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (r *Req) Edit() error {
-	panic("implement me")
+	if _, err := dao.Permission.Ctx(r.Ctx).OmitEmptyData().Where(dao.Permission.Columns().Id, r.Id).Update(r); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *Req) Del() error {
-	panic("implement me")
+	var p entity.Permission
+	if err := dao.Permission.Ctx(r.Ctx).Where(dao.Permission.Columns().Id, r.Id).Scan(&p); err != nil {
+		return err
+	}
+	if p.Id == 0 {
+		return gerror.New("记录不存在")
+	}
+	if p.Parent == 0 {
+		if _, err := dao.Permission.Ctx(r.Ctx).Where(dao.Permission.Columns().Parent, p.Id).Delete(); err != nil {
+			return err
+		}
+
+	}
+	if _, err := dao.Permission.Ctx(r.Ctx).Where(dao.Permission.Columns().Id, r.Id).Delete(); err != nil {
+		return err
+	}
+	return nil
+
 }
 
 func (r *Req) Tree() (g.Map, error) {
-	var res Permissions
-	if err := dao.Permission.Ctx(r.Ctx).Scan(&res); err != nil {
+	var res []entity.Permission
+	m := dao.Permission.Ctx(r.Ctx)
+	if r.Type != "" {
+		m = m.WhereNot(dao.Permission.Columns().Type, 3)
+	}
+	if err := m.Scan(&res); err != nil {
 		return nil, err
 	}
-	generateTree := tree.GenerateTree(res.ConvertToINodeArray(), nil)
-	return g.Map{"tree": generateTree}, nil
+
+	t := tree.GenerateTree(tree.ConvertToINodeArray(res), nil)
+
+	return g.Map{"tree": t}, nil
 }
 
-func (r *Req) Options() (g.Map, error) {
-	panic("implement me")
-}
-
-func (p Permissions) ConvertToINodeArray() (nodes []tree.INode) {
-	for _, v := range p {
-		nodes = append(nodes, v)
+func (r *Req) Options() ([]options.Option, error) {
+	var res []entity.Permission
+	m := dao.Permission.Ctx(r.Ctx)
+	if r.Type != "" {
+		m = m.Where(dao.Permission.Columns().Type, r.Type)
 	}
-	return
+
+	if err := m.OrderAsc(dao.Permission.Columns().Id).Scan(&res); err != nil {
+		return nil, err
+	}
+
+	return options.BuildOptions(res), nil
 }

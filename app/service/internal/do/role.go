@@ -20,4 +20,5 @@ type Role struct {
 	Value      interface{} //
 	Desc       interface{} //
 	Permission interface{} //
+	Status     interface{} //
 }

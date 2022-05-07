@@ -21,24 +21,26 @@ type PermissionDao struct {
 type PermissionColumns struct {
 	Id       string //
 	Parent   string //
-	Name     string //
+	Value    string //
 	Desc     string //
 	CreateAt string //
 	UpdateAt string //
 	DeleteAt string //
-	Tag      string //
+	Name     string //
+	Type     string // 1 权限域 2 权限组 3 权限
 }
 
 //  permissionColumns holds the columns for table permission.
 var permissionColumns = PermissionColumns{
 	Id:       "id",
 	Parent:   "parent",
-	Name:     "name",
+	Value:    "value",
 	Desc:     "desc",
 	CreateAt: "create_at",
 	UpdateAt: "update_at",
 	DeleteAt: "delete_at",
-	Tag:      "tag",
+	Name:     "name",
+	Type:     "type",
 }
 
 // NewPermissionDao creates and returns a new DAO object for table data access.

@@ -27,6 +27,7 @@ type RoleColumns struct {
 	Value      string //
 	Desc       string //
 	Permission string //
+	Status     string //
 }
 
 //  roleColumns holds the columns for table role.
@@ -39,6 +40,7 @@ var roleColumns = RoleColumns{
 	Value:      "value",
 	Desc:       "desc",
 	Permission: "permission",
+	Status:     "status",
 }
 
 // NewRoleDao creates and returns a new DAO object for table data access.

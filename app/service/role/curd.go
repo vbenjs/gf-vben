@@ -3,6 +3,7 @@ package role
 import (
 	"Gf-Vben/app/model/entity"
 	"Gf-Vben/app/service/internal/dao"
+	"Gf-Vben/app/util/options"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -29,7 +30,7 @@ type Role struct {
 
 func (r *Req) List() (g.Map, error) {
 	var res []entity.Role
-	if err := dao.Role.Ctx(r.Ctx).Scan(&res); err != nil {
+	if err := dao.Role.Ctx(r.Ctx).Order("id").Scan(&res); err != nil {
 		return nil, err
 	}
 	return g.Map{
@@ -40,21 +41,31 @@ func (r *Req) List() (g.Map, error) {
 	}, nil
 }
 func (r *Req) Add() error {
-	panic("implement me")
+	if _, err := dao.Role.Ctx(r.Ctx).Insert(r); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *Req) Edit() error {
-	panic("implement me")
+
+	if _, err := dao.Role.Ctx(r.Ctx).Where("id", r.Id).OmitEmptyData().Update(r); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *Req) Del() error {
-	panic("implement me")
+	if _, err := dao.Role.Ctx(r.Ctx).Delete("id", r.Id); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *Req) Tree() (g.Map, error) {
 	panic("implement me")
 }
 
-func (r *Req) Options() (g.Map, error) {
+func (r *Req) Options() ([]options.Option, error) {
 	panic("implement me")
 }

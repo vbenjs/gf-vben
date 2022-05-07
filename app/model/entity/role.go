@@ -18,4 +18,5 @@ type Role struct {
 	Value      string      `json:"value"      ` //
 	Desc       string      `json:"desc"       ` //
 	Permission int         `json:"permission" ` //
+	Status     int64       `json:"status"     ` //
 }

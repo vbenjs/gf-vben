@@ -12,10 +12,11 @@ import (
 type Permission struct {
 	Id       int64       `json:"id"       ` //
 	Parent   int64       `json:"parent"   ` //
-	Name     string      `json:"name"     ` //
+	Value    string      `json:"value"    ` //
 	Desc     string      `json:"desc"     ` //
 	CreateAt *gtime.Time `json:"createAt" ` //
 	UpdateAt *gtime.Time `json:"updateAt" ` //
 	DeleteAt *gtime.Time `json:"deleteAt" ` //
-	Tag      string      `json:"tag"      ` //
+	Name     string      `json:"name"     ` //
+	Type     int64       `json:"type"     ` // 1 权限域 2 权限组 3 权限
 }

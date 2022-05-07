@@ -14,10 +14,11 @@ type Permission struct {
 	g.Meta   `orm:"table:permission, do:true"`
 	Id       interface{} //
 	Parent   interface{} //
-	Name     interface{} //
+	Value    interface{} //
 	Desc     interface{} //
 	CreateAt *gtime.Time //
 	UpdateAt *gtime.Time //
 	DeleteAt *gtime.Time //
-	Tag      interface{} //
+	Name     interface{} //
+	Type     interface{} // 1 权限域 2 权限组 3 权限
 }
