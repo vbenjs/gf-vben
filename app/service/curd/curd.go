@@ -1,13 +1,12 @@
 package curd
 
 import (
-	"Gf-Vben/app/util/options"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
 type Curd interface {
 	// List 列表
-	List() (g.Map, error)
+	List() (*List, error)
 	// Add 新增
 	Add() error
 	// Edit 编辑
@@ -17,5 +16,12 @@ type Curd interface {
 	// Tree 返回树结构
 	Tree() (g.Map, error)
 	// Options 返回options
-	Options() ([]options.Option, error)
+	Options() ([]Option, error)
+}
+
+type List struct {
+	Items    interface{} `json:"items"`
+	Total    int         `json:"total"`
+	Page     int         `json:"page"`
+	PageSize int         `json:"pageSize"`
 }

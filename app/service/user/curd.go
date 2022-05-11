@@ -1,10 +1,10 @@
 package user
 
 import (
+	"Gf-Vben/app/model/entity"
+	"Gf-Vben/app/service/curd"
 	"Gf-Vben/app/service/internal/dao"
-	"Gf-Vben/app/util/options"
 	"context"
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -20,23 +20,17 @@ type Query struct {
 	Uid      int `p:"uid"`
 }
 
-func (r *Req) List() (g.Map, error) {
-
-	u, err := dao.User.Ctx(r.Ctx).All()
-	if err != nil {
+func (r *Req) List() (*curd.List, error) {
+	res := make([]entity.User, 0)
+	if err := dao.User.Ctx(r.Ctx).Scan(&res); err != nil {
 		return nil, err
 	}
-
-	if u == nil {
-		return nil, gerror.New("用户不存在")
-	}
-	return g.Map{
-		"items":    u,
-		"total":    1,
-		"page":     r.Page,
-		"pageSize": r.PageSize,
+	return &curd.List{
+		Items:    res,
+		Total:    len(res),
+		Page:     r.Page,
+		PageSize: r.PageSize,
 	}, nil
-	//return g.Map{"list":[]g.Map{g.Map{}}}
 }
 
 func (r *Req) Add() error {
@@ -54,6 +48,6 @@ func (r *Req) Tree() (g.Map, error) {
 	panic("implement me")
 }
 
-func (r *Req) Options() ([]options.Option, error) {
+func (r *Req) Options() ([]curd.Option, error) {
 	panic("implement me")
 }

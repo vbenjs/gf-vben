@@ -2,8 +2,8 @@ package role
 
 import (
 	"Gf-Vben/app/model/entity"
+	"Gf-Vben/app/service/curd"
 	"Gf-Vben/app/service/internal/dao"
-	"Gf-Vben/app/util/options"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -28,16 +28,16 @@ type Role struct {
 	Name string `json:"name"`
 }
 
-func (r *Req) List() (g.Map, error) {
-	var res []entity.Role
+func (r *Req) List() (*curd.List, error) {
+	res := make([]entity.Role, 0)
 	if err := dao.Role.Ctx(r.Ctx).Order("id").Scan(&res); err != nil {
 		return nil, err
 	}
-	return g.Map{
-		"items":    res,
-		"total":    len(res),
-		"page":     r.Page,
-		"pageSize": r.PageSize,
+	return &curd.List{
+		Items:    res,
+		Total:    len(res),
+		Page:     r.Page,
+		PageSize: r.PageSize,
 	}, nil
 }
 func (r *Req) Add() error {
@@ -66,6 +66,6 @@ func (r *Req) Tree() (g.Map, error) {
 	panic("implement me")
 }
 
-func (r *Req) Options() ([]options.Option, error) {
+func (r *Req) Options() ([]curd.Option, error) {
 	panic("implement me")
 }

@@ -1,4 +1,4 @@
-package options
+package curd
 
 import "Gf-Vben/app/model/entity"
 

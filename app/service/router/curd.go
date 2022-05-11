@@ -2,9 +2,8 @@ package router
 
 import (
 	"Gf-Vben/app/model/entity"
+	"Gf-Vben/app/service/curd"
 	"Gf-Vben/app/service/internal/dao"
-	"Gf-Vben/app/util/options"
-	"Gf-Vben/app/util/tree"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -30,18 +29,17 @@ type Query struct {
 	Status    int    `p:"status"`
 }
 
-func (r *Req) List() (g.Map, error) {
-	all, err := g.DB().Model("router").Order("parent,orderNo desc").All()
-	if err != nil {
+func (r *Req) List() (*curd.List, error) {
+	res := make([]entity.Router, 0)
+	if err := dao.Router.Ctx(r.Ctx).Order("parent,orderNo desc").Scan(&res); err != nil {
 		return nil, err
-
 	}
 
-	return g.Map{
-		"items":    all,
-		"total":    1,
-		"page":     r.Page,
-		"pageSize": r.PageSize,
+	return &curd.List{
+		Items:    res,
+		Total:    len(res),
+		Page:     r.Page,
+		PageSize: r.PageSize,
 	}, nil
 }
 func (r *Req) Add() error {
@@ -66,7 +64,7 @@ func (r *Req) Del() error {
 	return nil
 }
 
-func (r *Req) Options() ([]options.Option, error) {
+func (r *Req) Options() ([]curd.Option, error) {
 	panic("implement me")
 }
 
@@ -78,7 +76,7 @@ func (r *Req) Tree() (g.Map, error) {
 	}
 	//res := map[int]*Router{}
 	//result = BuildRouter(routers)
-	generateTree := tree.GenerateTree(tree.ConvertToINodeArray(res), nil)
+	generateTree := curd.GenerateTree(curd.ConvertToINodeArray(res), nil)
 
 	return g.Map{"router": generateTree}, nil
 }

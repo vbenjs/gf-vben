@@ -2,9 +2,8 @@ package permission
 
 import (
 	"Gf-Vben/app/model/entity"
+	"Gf-Vben/app/service/curd"
 	"Gf-Vben/app/service/internal/dao"
-	"Gf-Vben/app/util/options"
-	"Gf-Vben/app/util/tree"
 	"context"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
@@ -32,7 +31,7 @@ type Role struct {
 }
 type Permissions []entity.Permission
 
-func (r *Req) List() (g.Map, error) {
+func (r *Req) List() (*curd.List, error) {
 	var res Permissions
 	m := dao.Permission.Ctx(r.Ctx)
 	if r.Type != "" {
@@ -43,11 +42,11 @@ func (r *Req) List() (g.Map, error) {
 		return nil, err
 	}
 
-	return g.Map{
-		"items":    res,
-		"total":    len(res),
-		"page":     r.Page,
-		"pageSize": r.PageSize,
+	return &curd.List{
+		Items:    res,
+		Total:    len(res),
+		Page:     r.Page,
+		PageSize: r.PageSize,
 	}, nil
 }
 func (r *Req) Add() error {
@@ -96,12 +95,12 @@ func (r *Req) Tree() (g.Map, error) {
 		return nil, err
 	}
 
-	t := tree.GenerateTree(tree.ConvertToINodeArray(res), nil)
+	t := curd.GenerateTree(curd.ConvertToINodeArray(res), nil)
 
 	return g.Map{"tree": t}, nil
 }
 
-func (r *Req) Options() ([]options.Option, error) {
+func (r *Req) Options() ([]curd.Option, error) {
 	var res []entity.Permission
 	m := dao.Permission.Ctx(r.Ctx)
 	if r.Type != "" {
@@ -112,5 +111,5 @@ func (r *Req) Options() ([]options.Option, error) {
 		return nil, err
 	}
 
-	return options.BuildOptions(res), nil
+	return curd.BuildOptions(res), nil
 }

@@ -2,9 +2,8 @@ package example
 
 import (
 	"Gf-Vben/app/model/entity"
+	"Gf-Vben/app/service/curd"
 	"Gf-Vben/app/service/internal/dao"
-	"Gf-Vben/app/util/options"
-	"Gf-Vben/app/util/tree"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -30,21 +29,21 @@ type Query struct {
 	Status string `p:"status"`
 }
 
-func (r *Req) List() (g.Map, error) {
-	m := g.DB().Model("nav")
+func (r *Req) List() (*curd.List, error) {
+	res := make([]entity.User, 0)
+	m := dao.User.Ctx(r.Ctx)
 	count, err := m.Count()
 	if err != nil {
 		return nil, err
 	}
-	all, err := m.Page(r.Page, r.PageSize).All()
-	if err != nil {
+	if err := m.Page(r.Page, r.PageSize).Scan(res); err != nil {
 		return nil, err
 	}
-	return g.Map{
-		"items":    all,
-		"total":    count,
-		"page":     r.Page,
-		"pageSize": r.PageSize,
+	return &curd.List{
+		Items:    res,
+		Total:    count,
+		Page:     r.Page,
+		PageSize: r.PageSize,
 	}, nil
 }
 
@@ -68,11 +67,11 @@ func (r *Req) Tree() (g.Map, error) {
 	if err := dao.Permission.Ctx(r.Ctx).Scan(&res); err != nil {
 		return nil, err
 	}
-	generateTree := tree.GenerateTree(tree.ConvertToINodeArray(res), nil)
+	generateTree := curd.GenerateTree(curd.ConvertToINodeArray(res), nil)
 	return g.Map{"tree": generateTree}, nil
 }
 
-func (r *Req) Options() ([]options.Option, error) {
+func (r *Req) Options() ([]curd.Option, error) {
 	//var res []entity.Permission
 	//m := dao.Permission.Ctx(r.Ctx)
 	//if r.Type != "" {
@@ -84,5 +83,5 @@ func (r *Req) Options() ([]options.Option, error) {
 	//}
 	//
 	//return options.BuildOptions(res), nil
-	return []options.Option{}, nil
+	return []curd.Option{}, nil
 }
