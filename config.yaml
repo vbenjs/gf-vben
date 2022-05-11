@@ -2,7 +2,7 @@ server:
   address:     ":10088"
   openapiPath: "/api.json"
   swaggerPath: "/swagger"
-
+  accessLogEnabled: false
 
 database:
   default:
