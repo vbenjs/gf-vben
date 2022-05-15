@@ -9,6 +9,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
+	"sort"
 )
 
 type LoginReq struct {
@@ -99,7 +100,7 @@ type Menu struct {
 	Name      string `orm:"name" json:"name"`
 	Component string `orm:"component" json:"component"`
 	Meta      `json:"meta"`
-	Children  []*Menu    `json:"children"`
+	Children  Menus      `json:"children"`
 	Status    int        `orm:"status" json:"status"`
 	CreateAt  gtime.Time `orm:"create_at" json:"create_at"`
 	OrderNo   int        `orm:"order_no" json:"order_no"`
@@ -112,31 +113,37 @@ type Meta struct {
 	Icon  string `orm:"icon" json:"icon"`
 }
 
-func BuildRouter(routers []*Menu) (result []*Menu) {
+type Menus []*Menu
+
+func (m Menus) Len() int {
+	return len(m)
+}
+
+func (m Menus) Less(i, j int) bool {
+	return m[i].OrderNo < m[j].OrderNo
+}
+
+func (m Menus) Swap(i, j int) {
+	m[i], m[j] = m[j], m[i]
+}
+
+func BuildRouter(routers []*Menu) (result Menus) {
 	res := map[int]*Menu{}
 	for _, router := range routers {
-		router.Children = make([]*Menu, 0)
+		router.Children = make(Menus, 0)
 		res[router.Id] = router
+		if router.Parent == 0 {
+			result = append(result, router)
+		}
 		if r, ok := res[router.Parent]; ok {
-			if len(r.Children) > 0 {
-				if r.Children[0].OrderNo > router.OrderNo {
-					r.Children = append([]*Menu{router}, r.Children...)
-					continue
-				}
-			}
 			r.Children = append(r.Children, router)
 		}
-
 	}
-	for _, v := range res {
-		if v.Parent == 0 {
-			if len(result) > 0 {
-				if result[0].OrderNo > v.OrderNo {
-					result = append([]*Menu{v}, result...)
-					continue
-				}
-			}
-			result = append(result, v)
+
+	sort.Sort(result)
+	for _, menu := range result {
+		if len(menu.Children) > 0 {
+			sort.Sort(menu.Children)
 		}
 	}
 	return
