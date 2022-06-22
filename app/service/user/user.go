@@ -7,7 +7,6 @@ import (
 	"context"
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"sort"
 )
@@ -89,7 +88,7 @@ func (r *MenuReq) Menu() ([]*Menu, error) {
 		p = append(p, permission[2])
 	}
 	var routers []*Menu
-	if err := g.DB().Model("router").Where("status", 1).Where("permission", p).Order("parent").Scan(&routers); err != nil {
+	if err := dao.Router.Ctx(r.Ctx).Where(dao.Router.Columns().Status, 1).Order(dao.Router.Columns().Parent).Scan(&routers); err != nil {
 		return nil, err
 	}
 	return BuildRouter(routers), nil
