@@ -28,6 +28,10 @@ type Role struct {
 	Name string `json:"name"`
 }
 
+func (r *Req) SetCtx(ctx context.Context) {
+	r.Ctx = ctx
+}
+
 func (r *Req) List() (*curd.List, error) {
 	res := make([]entity.Role, 0)
 	if err := dao.Role.Ctx(r.Ctx).Order("id").Scan(&res); err != nil {

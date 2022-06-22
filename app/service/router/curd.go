@@ -29,6 +29,10 @@ type Query struct {
 	Status    int    `p:"status"`
 }
 
+func (r *Req) SetCtx(ctx context.Context) {
+	r.Ctx = ctx
+}
+
 func (r *Req) List() (*curd.List, error) {
 	res := make([]entity.Router, 0)
 	if err := dao.Router.Ctx(r.Ctx).Order("parent,orderNo desc").Scan(&res); err != nil {

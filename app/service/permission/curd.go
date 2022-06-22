@@ -29,6 +29,11 @@ type Query struct {
 type Role struct {
 	Name string `json:"name"`
 }
+
+func (r *Req) SetCtx(ctx context.Context) {
+	r.Ctx = ctx
+}
+
 type Permissions []entity.Permission
 
 func (r *Req) List() (*curd.List, error) {

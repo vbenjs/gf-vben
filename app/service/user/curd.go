@@ -20,6 +20,10 @@ type Query struct {
 	Uid      int `p:"uid"`
 }
 
+func (r *Req) SetCtx(ctx context.Context) {
+	r.Ctx = ctx
+}
+
 func (r *Req) List() (*curd.List, error) {
 	res := make([]entity.User, 0)
 	if err := dao.User.Ctx(r.Ctx).Scan(&res); err != nil {

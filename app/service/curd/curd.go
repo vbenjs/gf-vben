@@ -1,10 +1,13 @@
 package curd
 
 import (
+	"context"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
 type Curd interface {
+	//设置Ctx
+	SetCtx(context.Context)
 	// List 列表
 	List() (*List, error)
 	// Add 新增
