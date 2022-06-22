@@ -22,6 +22,12 @@ type Curd interface {
 	Options() ([]Option, error)
 }
 
+type Pagination struct {
+	Page     int    `p:"page"`
+	PageSize int    `p:"page_size"`
+	Order    string `p:"order"`
+}
+
 type List struct {
 	Items    interface{} `json:"items"`
 	Total    int         `json:"total"`
