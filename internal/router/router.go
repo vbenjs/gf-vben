@@ -1,7 +1,6 @@
 package router
 
 import (
-	"Gf-Vben/api/user"
 	"Gf-Vben/internal/controller"
 	"Gf-Vben/internal/middleware"
 	"Gf-Vben/util"
@@ -17,17 +16,18 @@ func init() {
 
 	s.Use(util.ResponseHandler, middleware.CORS)
 	s.Group("/", func(group *ghttp.RouterGroup) {
-		group.Bind(
-			new(user.Api),
-		)
-		group.Middleware(middleware.Auth)
+		group.Map(g.Map{
+			"login":    controller.User.Login,
+			"register": controller.User.Register,
+		})
+		//group.Middleware(middleware.Auth)
 
 	})
 	s.Group("/api", func(group *ghttp.RouterGroup) {
 		group.Middleware(middleware.Auth)
 		group.Group("/user", func(group *ghttp.RouterGroup) {
 			group.Bind(
-				new(user.Api2),
+				controller.User,
 			)
 		})
 		//group.Middleware(middleware.Casbin)

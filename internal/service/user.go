@@ -5,4 +5,30 @@
 
 package service
 
-type ()
+import (
+	"Gf-Vben/internal/const/user"
+	"Gf-Vben/internal/model"
+	"context"
+)
+
+type (
+	IUser interface {
+		Register(ctx context.Context, in model.RegisterReq) error
+		Menu(ctx context.Context) ([]*user.Menu, error)
+	}
+)
+
+var (
+	localUser IUser
+)
+
+func User() IUser {
+	if localUser == nil {
+		panic("implement not found for interface IUser, forgot register?")
+	}
+	return localUser
+}
+
+func RegisterUser(i IUser) {
+	localUser = i
+}

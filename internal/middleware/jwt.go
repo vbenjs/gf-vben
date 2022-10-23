@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"Gf-Vben/internal/dao"
-	"Gf-Vben/internal/logic/user"
+	"Gf-Vben/internal/model"
 	"Gf-Vben/internal/model/entity"
 	"context"
 	jwt "github.com/gogf/gf-jwt/v2"
@@ -81,7 +81,7 @@ func Unauthorized(ctx context.Context, code int, message string) {
 // Check error (e) to determine the appropriate error message.
 func Authenticator(ctx context.Context) (interface{}, error) {
 	r := g.RequestFromCtx(ctx)
-	req := new(user.LoginReq)
+	req := new(model.LoginReq)
 	if err := r.Parse(req); err != nil {
 		return "", err
 	}
