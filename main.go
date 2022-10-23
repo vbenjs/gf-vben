@@ -1,7 +1,8 @@
 package main
 
 import (
-	_ "Gf-Vben/app"
+	_ "Gf-Vben/internal/boot"
+
 	"github.com/gogf/gf/v2/frame/g"
 )
 

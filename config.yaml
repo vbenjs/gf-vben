@@ -15,17 +15,3 @@ database:
   default:
     link:   "pgsql:user=gfvben password=JBprEMNHJ7Md host=47.116.71.73 port=5432 dbname=gfvben sslmode=disable"
     debug:  true
-
-gfcli:
-  gen:
-    dao:
-      - link:  "pgsql:user=gfvben password=JBprEMNHJ7Md host=47.116.71.73 port=5432 dbname=gfvben sslmode=disable"
-        path:   "./app"
-
-  build:
-    name: "gf-vben"
-    arch: "arm"
-    system: "linux"
-    version: "v1.0.0"
-    output: "./bin"
-    extra: ""
