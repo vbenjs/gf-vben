@@ -60,7 +60,7 @@ func (r *Req) Tree() (g.Map, error) {
 	if err := dao.Permission.Ctx(r.Ctx).Scan(&res); err != nil {
 		return nil, err
 	}
-	generateTree := curd.GenerateTree(curd.ConvertToINodeArray(res), nil)
+	generateTree := curd.GenerateTree(res, nil)
 	return g.Map{"tree": generateTree}, nil
 }
 

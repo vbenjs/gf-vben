@@ -2,6 +2,8 @@ package entity
 
 import "github.com/gogf/gf/v2/util/gconv"
 
+// Tree 接口的实现
+
 func (p Permission) GetTitle() string {
 	return p.Name
 }

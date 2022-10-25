@@ -80,7 +80,7 @@ func (r *Req) Tree() (g.Map, error) {
 	}
 	//res := map[int]*Router{}
 	//result = BuildRouter(routers)
-	generateTree := curd.GenerateTree(curd.ConvertToINodeArray(res), nil)
+	generateTree := curd.GenerateTree(res, nil)
 
 	return g.Map{"router": generateTree}, nil
 }

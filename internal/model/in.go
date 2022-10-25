@@ -1,5 +1,7 @@
 package model
 
+//logic的入参
+
 type CurdReq struct {
 	Interface string `p:"i" v:"required"`
 	Action    string `p:"a" v:"required"`

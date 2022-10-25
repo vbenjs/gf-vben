@@ -100,7 +100,7 @@ func (r *Req) Tree() (g.Map, error) {
 		return nil, err
 	}
 
-	t := curd.GenerateTree(curd.ConvertToINodeArray(res), nil)
+	t := curd.GenerateTree(res, nil)
 
 	return g.Map{"tree": t}, nil
 }

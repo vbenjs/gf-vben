@@ -1,6 +1,7 @@
 package curd
 
 import (
+	"Gf-Vben/internal/model/entity"
 	"sort"
 )
 
@@ -16,9 +17,9 @@ type Tree struct {
 	Selectable      bool        `json:"selectable"`
 }
 
-// INode ConvertToINodeArray 其他的结构体想要生成菜单树，直接实现这个接口
-type INode interface {
-
+// TreeNode ConvertToINodeArray 其他的结构体想要生成菜单树，直接实现这个接口
+type TreeNode interface {
+	entity.Permission | entity.Router
 	// GetTitle 获取显示名字
 	GetTitle() string
 	// GetId 获取id
@@ -32,26 +33,15 @@ type INode interface {
 	//GetTreeValue 设置Value值
 	GetTreeValue() interface{}
 }
-type INodes []INode
 
-func (nodes INodes) Len() int {
-	return len(nodes)
-}
-func (nodes INodes) Swap(i, j int) {
-	nodes[i], nodes[j] = nodes[j], nodes[i]
-}
-func (nodes INodes) Less(i, j int) bool {
-	return nodes[i].GetId() < nodes[j].GetId()
-}
-
-// GenerateTree 自定义的结构体实现 INode 接口后调用此方法生成树结构
+// GenerateTree 自定义的结构体实现 TreeNode 接口后调用此方法生成树结构
 // nodes 需要生成树的节点
 // selectedNode 生成树后选中的节点
 // menuTrees 生成成功后的树结构对象
-func GenerateTree(nodes, selectedNodes []INode) (trees []Tree) {
+func GenerateTree[T TreeNode](nodes, selectedNodes []T) (trees []Tree) {
 	trees = []Tree{}
 	// 定义顶层根和子节点
-	var roots, childs []INode
+	var roots, childs []T
 	for _, v := range nodes {
 		if v.IsRoot() {
 			// 判断顶层根节点
@@ -79,7 +69,7 @@ func GenerateTree(nodes, selectedNodes []INode) (trees []Tree) {
 	return
 }
 
-func buildTree(node INode) *Tree {
+func buildTree[T TreeNode](node T) *Tree {
 	return &Tree{
 		Title:      node.GetTitle(),
 		Data:       node.GetData(),
@@ -93,8 +83,8 @@ func buildTree(node INode) *Tree {
 // nodes 递归的节点
 // selectedNodes 选中的节点
 
-func recursiveTree(tree *Tree, nodes, selectedNodes []INode) {
-	data := tree.Data.(INode)
+func recursiveTree[T TreeNode](tree *Tree, nodes, selectedNodes []T) {
+	data := tree.Data.(T)
 
 	for _, v := range nodes {
 		if v.IsRoot() {
@@ -123,8 +113,8 @@ func recursiveTree(tree *Tree, nodes, selectedNodes []INode) {
 // FindRelationNode 在 allTree 中查询 nodes 中节点的所有父节点
 // nodes 要查询父节点的子节点数组
 // allTree 所有节点数组
-func FindRelationNode(nodes, allNodes []INode) (respNodes []INode) {
-	nodeMap := make(map[int]INode)
+func FindRelationNode[T TreeNode](nodes, allNodes []T) (respNodes []T) {
+	nodeMap := make(map[int]T)
 	for _, v := range nodes {
 		recursiveFindRelationNode(nodeMap, allNodes, v, 0)
 	}
@@ -132,7 +122,9 @@ func FindRelationNode(nodes, allNodes []INode) (respNodes []INode) {
 	for _, v := range nodeMap {
 		respNodes = append(respNodes, v)
 	}
-	sort.Sort(INodes(respNodes))
+	sort.Slice(respNodes, func(i, j int) bool {
+		return respNodes[i].GetId() < respNodes[j].GetId()
+	})
 	return
 }
 
@@ -141,7 +133,7 @@ func FindRelationNode(nodes, allNodes []INode) (respNodes []INode) {
 // allNodes 所有节点
 // node 递归节点
 // t 递归查找类型：0 查找父、子节点；1 只查找父节点；2 只查找子节点
-func recursiveFindRelationNode(nodeMap map[int]INode, allNodes []INode, node INode, t int) {
+func recursiveFindRelationNode[T TreeNode](nodeMap map[int]T, allNodes []T, node T, t int) {
 	nodeMap[node.GetId()] = node
 	for _, v := range allNodes {
 		if _, ok := nodeMap[v.GetId()]; ok {
@@ -170,7 +162,7 @@ func recursiveFindRelationNode(nodeMap map[int]INode, allNodes []INode, node INo
 
 // nodeSelected 判断节点的选中状态
 // node 进行判断节点
-func nodeSelected(node INode, selectedNodes []INode, children []Tree) bool {
+func nodeSelected[T TreeNode](node T, selectedNodes []T, children []Tree) bool {
 	for _, v := range selectedNodes {
 		if node.GetId() == v.GetId() {
 			// 1. 如果选择节点数组中存在当前节点
@@ -210,7 +202,7 @@ func nodePartialSelected(trees []Tree) bool {
 	return true
 }
 
-//// TreeArray Inode无法设置类型 所以为泛型创建的过度类型
+// TreeArray Inode无法设置类型 所以为泛型创建的过度类型
 //type TreeArray interface {
 //	entity.Permission | entity.Router
 //	// GetTitle 获取显示名字
@@ -226,10 +218,3 @@ func nodePartialSelected(trees []Tree) bool {
 //
 //	GetTreeValue() interface{}
 //}
-
-func ConvertToINodeArray[T INode](a []T) (res []INode) {
-	for _, v := range a {
-		res = append(res, v)
-	}
-	return
-}
