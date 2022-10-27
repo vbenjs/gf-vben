@@ -6,7 +6,6 @@ import (
 	"Gf-Vben/internal/service"
 	"Gf-Vben/util"
 	"context"
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -19,7 +18,6 @@ type cUser struct {
 
 func (cUser) Login(ctx context.Context, req *user.LoginReq) (res *util.JsonRes, err error) {
 	res = new(util.JsonRes)
-
 	token, _ := middleware.GfJWTMiddleware.LoginHandler(ctx)
 	res.Data = g.Map{"token": token}
 	return
@@ -27,33 +25,20 @@ func (cUser) Login(ctx context.Context, req *user.LoginReq) (res *util.JsonRes, 
 
 func (cUser) Register(ctx context.Context, req *user.RegisterReq) (res *util.JsonRes, err error) {
 	res = new(util.JsonRes)
-
-	if err := service.User().Register(ctx, req.RegisterReq); err != nil {
-		return nil, gerror.WrapCode(util.Code(1), err)
-	}
+	err = service.User().Register(ctx, req.RegisterReq)
 	res.Message = "注册成功"
 	return
 }
 
 func (cUser) Info(ctx context.Context, req *user.InfoReq) (res *util.JsonRes, err error) {
-
 	res = new(util.JsonRes)
-	res.Data = g.Map{
-		"username": "vben",
-		"roles":    []string{"admin"},
-	}
-
+	res.Data, err = service.User().Info(ctx, req.Uid)
 	return
 }
 
 func (cUser) Menu(ctx context.Context, req *user.MenuReq) (res *util.JsonRes, err error) {
-	g.Dump(req)
 	res = new(util.JsonRes)
-	menu, err := service.User().Menu(ctx)
+	res.Data, err = service.User().Menu(ctx)
 
-	if err != nil {
-		return nil, gerror.WrapCode(util.Code(1), err)
-	}
-	res.Data = menu
 	return
 }

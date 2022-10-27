@@ -7,7 +7,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
-// 数据返回通用JSON数据结构
+// JsonRes 数据返回通用JSON数据结构
 type JsonRes struct {
 	g.Meta  `mime:"json" example:"string"`
 	Code    int         `json:"code"`    // 错误码((0:成功, 1:失败, >1:错误码))
@@ -39,7 +39,7 @@ func ResponseHandler(r *ghttp.Request) {
 
 }
 
-// 标准返回结果数据结构封装。
+// Json 标准返回结果数据结构封装。
 func Json(r *ghttp.Request, code int, message string, data ...interface{}) {
 	responseData := interface{}(nil)
 	if len(data) > 0 {
@@ -52,7 +52,7 @@ func Json(r *ghttp.Request, code int, message string, data ...interface{}) {
 	})
 }
 
-// 返回JSON数据并退出当前HTTP执行函数。
+// JsonExit 返回JSON数据并退出当前HTTP执行函数。
 func JsonExit(r *ghttp.Request, err int, msg string, data ...interface{}) {
 	Json(r, err, msg, data...)
 	r.Exit()

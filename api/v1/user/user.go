@@ -14,11 +14,11 @@ type RegisterReq struct {
 	model.RegisterReq
 }
 type InfoReq struct {
-	g.Meta `path:"/info" method:"get" summary:"通过Token获取用户信息" `
+	g.Meta `path:"/info" method:"get" summary:"通过Token获取用户信息"`
+	Uid    int `p:"uid"`
 }
 
 type MenuReq struct {
 	g.Meta `path:"/menu" method:"get" summary:"获取用户菜单"`
 	Uid    int `p:"uid"`
-	//user.MenuReq
 }

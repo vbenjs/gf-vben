@@ -31,7 +31,6 @@ func init() {
 			)
 		})
 		group.Middleware(middleware.Casbin)
-
 		group.Bind(
 			controller.Curd,
 		)

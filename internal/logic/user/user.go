@@ -8,6 +8,7 @@ import (
 	"Gf-Vben/internal/service"
 	"context"
 	"github.com/gogf/gf/v2/crypto/gmd5"
+	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/errors/gerror"
 )
 
@@ -65,4 +66,17 @@ func (s *sUser) Menu(ctx context.Context) ([]*user.Menu, error) {
 		return nil, err
 	}
 	return user.BuildRouter(routers), nil
+}
+
+func (s *sUser) Info(ctx context.Context, uid int) (gdb.Record, error) {
+
+	one, err := dao.User.Ctx(ctx).Where(dao.User.Columns().Id, uid).FieldsEx(dao.User.Columns().Password).One()
+	if err != nil {
+		return nil, err
+	}
+	if one.IsEmpty() {
+		return nil, gerror.New("用户不存在")
+	}
+
+	return one, nil
 }
