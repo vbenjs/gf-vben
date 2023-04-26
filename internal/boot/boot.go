@@ -1,17 +1,11 @@
 package boot
 
 import (
-	casbin2 "Gf-Vben/internal/const/casbin"
+	//casbin2 "Gf-Vben/internal/const/casbin"
 	_ "Gf-Vben/internal/logic"
 	_ "Gf-Vben/internal/router"
-	"fmt"
-	"github.com/casbin/casbin/v2"
-	"github.com/casbin/casbin/v2/model"
 	_ "github.com/gogf/gf/contrib/drivers/pgsql/v2"
-	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/os/gctx"
-	"github.com/gogf/gf/v2/os/glog"
-	adapter "github.com/jinmao88/gf-casbin"
+	//adapter "github.com/jinmao88/gf-casbin"
 	"github.com/yitter/idgenerator-go/idgen"
 )
 
@@ -20,7 +14,7 @@ func init() {
 	//初始化雪花ID
 	initIdGenerator()
 	//初始化Casbin
-	initCasbin()
+	//initCasbin()
 }
 
 func initIdGenerator() {
@@ -33,38 +27,38 @@ func initIdGenerator() {
 	idgen.SetIdGenerator(options)
 }
 
-func initCasbin() {
-	a, err := adapter.New(g.DB())
-	if err != nil {
-		glog.Error(gctx.New(), err)
-		return
-	}
-	modelFromString, err := model.NewModelFromString(`
-		[request_definition]
-		r = sub, dom, obj, act
-
-		[policy_definition]
-		p = sub, dom, obj, act
-
-		[role_definition]
-		g = _, _, _
-
-		[policy_effect]
-		e = some(where (p.eft == allow))
-
-		[matchers]
-		m = g(r.sub, p.sub, r.dom) && r.dom == p.dom && r.obj == p.obj && (r.act == p.act||p.act == "*")||p.sub == "admin"
-	`)
-	if err != nil {
-		glog.Error(gctx.New(), err)
-		return
-	}
-	casbin2.Enforcer, err = casbin.NewEnforcer(modelFromString, a)
-	if err != nil {
-		glog.Error(gctx.New(), err)
-		return
-	}
-	domain := casbin2.Enforcer.GetPermissionsForUserInDomain("user", "curd")
-	fmt.Println(domain)
-	glog.Printf(gctx.New(), "Cabin初始化成功")
-}
+//func initCasbin() {
+//	a, err := adapter.New(g.DB())
+//	if err != nil {
+//		glog.Error(gctx.New(), err)
+//		return
+//	}
+//	modelFromString, err := model.NewModelFromString(`
+//		[request_definition]
+//		r = sub, dom, obj, act
+//
+//		[policy_definition]
+//		p = sub, dom, obj, act
+//
+//		[role_definition]
+//		g = _, _, _
+//
+//		[policy_effect]
+//		e = some(where (p.eft == allow))
+//
+//		[matchers]
+//		m = g(r.sub, p.sub, r.dom) && r.dom == p.dom && r.obj == p.obj && (r.act == p.act||p.act == "*")||p.sub == "admin"
+//	`)
+//	if err != nil {
+//		glog.Error(gctx.New(), err)
+//		return
+//	}
+//	casbin2.Enforcer, err = casbin.NewEnforcer(modelFromString, a)
+//	if err != nil {
+//		glog.Error(gctx.New(), err)
+//		return
+//	}
+//	domain := casbin2.Enforcer.GetPermissionsForUserInDomain("user", "curd")
+//	fmt.Println(domain)
+//	glog.Printf(gctx.New(), "Cabin初始化成功")
+//}
