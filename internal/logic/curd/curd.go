@@ -2,8 +2,6 @@ package curd
 
 import (
 	"Gf-Vben/internal/const/curd"
-	"Gf-Vben/internal/logic/permission"
-	"Gf-Vben/internal/logic/role"
 	"Gf-Vben/internal/logic/router"
 	"Gf-Vben/internal/logic/user"
 	"Gf-Vben/internal/model"
@@ -33,11 +31,10 @@ func (s *sCurd) Curd(ctx context.Context, r *model.CurdReq) (res *util.JsonRes, 
 		cu = new(user.Req)
 	case "router":
 		cu = new(router.Req)
-	case "role":
-		cu = new(role.Req)
-	case "permission":
-		cu = new(permission.Req)
-	//	//cu = req
+	//case "role":
+	//	cu = new(role.Req)
+	//case "permission":
+	//cu = new(permission.Req)
 	default:
 		return nil, gerror.NewCode(util.Code(1), "接口参数错误")
 	}

@@ -20,38 +20,36 @@ type RouterDao struct {
 
 // RouterColumns defines and stores column names for table router.
 type RouterColumns struct {
-	Path       string //
-	Name       string //
-	Redirect   string //
-	Title      string //
-	Icon       string //
-	Component  string //
-	Parent     string //
-	OrderNo    string //
-	Status     string //
-	CreateAt   string //
-	UpdateAt   string //
-	DeleteAt   string //
-	Permission string //
-	Id         string //
+	Id        string //
+	Path      string //
+	Name      string //
+	Redirect  string //
+	Title     string //
+	Icon      string //
+	Component string //
+	Parent    string //
+	OrderNo   string //
+	Status    string //
+	CreateAt  string //
+	UpdateAt  string //
+	DeleteAt  string //
 }
 
 // routerColumns holds the columns for table router.
 var routerColumns = RouterColumns{
-	Path:       "path",
-	Name:       "name",
-	Redirect:   "redirect",
-	Title:      "title",
-	Icon:       "icon",
-	Component:  "component",
-	Parent:     "parent",
-	OrderNo:    "orderNo",
-	Status:     "status",
-	CreateAt:   "create_at",
-	UpdateAt:   "update_at",
-	DeleteAt:   "delete_at",
-	Permission: "permission",
-	Id:         "id",
+	Id:        "id",
+	Path:      "path",
+	Name:      "name",
+	Redirect:  "redirect",
+	Title:     "title",
+	Icon:      "icon",
+	Component: "component",
+	Parent:    "parent",
+	OrderNo:   "orderNo",
+	Status:    "status",
+	CreateAt:  "create_at",
+	UpdateAt:  "update_at",
+	DeleteAt:  "delete_at",
 }
 
 // NewRouterDao creates and returns a new DAO object for table data access.
@@ -94,6 +92,6 @@ func (dao *RouterDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *RouterDao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *RouterDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

@@ -10,18 +10,17 @@ import (
 
 // Router is the golang structure for table router.
 type Router struct {
-	Path       string      `json:"path"       ` //
-	Name       string      `json:"name"       ` //
-	Redirect   string      `json:"redirect"   ` //
-	Title      string      `json:"title"      ` //
-	Icon       string      `json:"icon"       ` //
-	Component  string      `json:"component"  ` //
-	Parent     int         `json:"parent"     ` //
-	OrderNo    int         `json:"orderNo"    ` //
-	Status     int         `json:"status"     ` //
-	CreateAt   *gtime.Time `json:"createAt"   ` //
-	UpdateAt   *gtime.Time `json:"updateAt"   ` //
-	DeleteAt   *gtime.Time `json:"deleteAt"   ` //
-	Permission string      `json:"permission" ` //
-	Id         int         `json:"id"         ` //
+	Id        int         `json:"id"        ` //
+	Path      string      `json:"path"      ` //
+	Name      string      `json:"name"      ` //
+	Redirect  string      `json:"redirect"  ` //
+	Title     string      `json:"title"     ` //
+	Icon      string      `json:"icon"      ` //
+	Component string      `json:"component" ` //
+	Parent    int         `json:"parent"    ` //
+	OrderNo   int         `json:"orderNo"   ` //
+	Status    int         `json:"status"    ` //
+	CreateAt  *gtime.Time `json:"createAt"  ` //
+	UpdateAt  *gtime.Time `json:"updateAt"  ` //
+	DeleteAt  *gtime.Time `json:"deleteAt"  ` //
 }

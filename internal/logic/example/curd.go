@@ -3,7 +3,6 @@ package example
 import (
 	"Gf-Vben/internal/const/curd"
 	"Gf-Vben/internal/dao"
-	"Gf-Vben/internal/model/entity"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -56,12 +55,12 @@ func (r *Req) Del() error {
 }
 
 func (r *Req) Tree() (g.Map, error) {
-	var res []entity.Permission
-	if err := dao.Permission.Ctx(r.Ctx).Scan(&res); err != nil {
-		return nil, err
-	}
-	generateTree := curd.GenerateTree(res, nil)
-	return g.Map{"tree": generateTree}, nil
+	//var res []entity.Permission
+	//if err := dao.Permission.Ctx(r.Ctx).Scan(&res); err != nil {
+	//	return nil, err
+	//}
+	//generateTree := curd.GenerateTree(res, nil)
+	return g.Map{"tree": ""}, nil
 }
 
 func (r *Req) Options() ([]curd.Option, error) {

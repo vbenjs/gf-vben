@@ -20,10 +20,12 @@ type UserDao struct {
 
 // UserColumns defines and stores column names for table user.
 type UserColumns struct {
-	Id       string //
-	Username string //
-	Password string //
-	Status   string //
+	Id       string // primary id
+	Username string // username
+	Password string // password
+	Note     string //
+	NickName string // nickName
+	Status   string // 1:enable 2:disable
 	CreateAt string //
 	UpdateAt string //
 	DeleteAt string //
@@ -34,6 +36,8 @@ var userColumns = UserColumns{
 	Id:       "id",
 	Username: "username",
 	Password: "password",
+	Note:     "note",
+	NickName: "nick_name",
 	Status:   "status",
 	CreateAt: "create_at",
 	UpdateAt: "update_at",
@@ -80,6 +84,6 @@ func (dao *UserDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *UserDao) Transaction(ctx context.Context, f func(ctx context.Context, tx *gdb.TX) error) (err error) {
+func (dao *UserDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }
