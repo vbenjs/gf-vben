@@ -1,11 +1,11 @@
 package router
 
 import (
-	"Gf-Vben/internal/const/curd"
 	"Gf-Vben/internal/dao"
 	"Gf-Vben/internal/model/entity"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/jinmao88/gf-utility/curd"
 )
 
 type Req struct {

@@ -4,8 +4,9 @@ go 1.20
 
 require (
 	github.com/gogf/gf-jwt/v2 v2.0.1
-	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.4.0
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.0
 	github.com/gogf/gf/v2 v2.4.0
+	github.com/jinmao88/gf-utility v1.0.1
 	github.com/yitter/idgenerator-go v1.3.3
 )
 
@@ -16,10 +17,10 @@ require (
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.3.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
-	github.com/lib/pq v1.10.5 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect

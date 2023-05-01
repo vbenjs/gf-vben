@@ -3,9 +3,9 @@ package router
 import (
 	"Gf-Vben/internal/controller"
 	"Gf-Vben/internal/middleware"
-	"Gf-Vben/util"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/jinmao88/gf-utility/response"
 )
 
 // 你可以将路由注册放到一个文件中管理，
@@ -14,7 +14,7 @@ import (
 func init() {
 	s := g.Server()
 
-	s.Use(util.ResponseHandler, middleware.CORS)
+	s.Use(response.ResponseHandler, middleware.CORS)
 	s.Group("/", func(group *ghttp.RouterGroup) {
 		group.Map(g.Map{
 			"login":    controller.User.Login,

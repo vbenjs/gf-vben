@@ -1,10 +1,10 @@
 package user
 
 import (
-	"Gf-Vben/internal/const/curd"
 	"Gf-Vben/internal/dao"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/jinmao88/gf-utility/curd"
 )
 
 type Req struct {

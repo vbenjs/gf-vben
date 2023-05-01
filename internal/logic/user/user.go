@@ -1,7 +1,6 @@
 package user
 
 import (
-	"Gf-Vben/internal/const/user"
 	"Gf-Vben/internal/dao"
 	"Gf-Vben/internal/model"
 	"Gf-Vben/internal/model/entity"
@@ -10,6 +9,7 @@ import (
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/errors/gerror"
+	"github.com/jinmao88/gf-utility/menu"
 )
 
 type sUser struct {
@@ -23,6 +23,7 @@ func New() *sUser {
 }
 
 func (s *sUser) Register(ctx context.Context, in model.RegisterReq) error {
+
 	if in.Pw != in.Pw2 {
 		return gerror.New("密码不一致")
 	}
@@ -54,18 +55,18 @@ func (s *sUser) Register(ctx context.Context, in model.RegisterReq) error {
 //	Ctx context.Context
 //}
 
-func (s *sUser) Menu(ctx context.Context) ([]*user.Menu, error) {
+func (s *sUser) Menu(ctx context.Context) ([]*menu.Menu, error) {
 	//casbin.CE.LoadPolicy()
 	//var p []string
 	//permissions := casbin.CE.GetPermissionsForUserInDomain(r.Uid, "menu")
 	//for _, permission := range permissions {
 	//	p = append(p, permission[2])
 	//}
-	var routers []*user.Menu
+	var routers []*menu.Menu
 	if err := dao.Router.Ctx(ctx).Where(dao.Router.Columns().Status, 1).Order(dao.Router.Columns().Parent).Scan(&routers); err != nil {
 		return nil, err
 	}
-	return user.BuildRouter(routers), nil
+	return menu.BuildRouter(routers), nil
 }
 
 func (s *sUser) Info(ctx context.Context, uid int) (gdb.Record, error) {

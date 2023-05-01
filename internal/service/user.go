@@ -6,9 +6,9 @@
 package service
 
 import (
-	"Gf-Vben/internal/const/user"
 	"Gf-Vben/internal/model"
 	"context"
+	"github.com/jinmao88/gf-utility/menu"
 
 	"github.com/gogf/gf/v2/database/gdb"
 )
@@ -16,7 +16,7 @@ import (
 type (
 	IUser interface {
 		Register(ctx context.Context, in model.RegisterReq) error
-		Menu(ctx context.Context) ([]*user.Menu, error)
+		Menu(ctx context.Context) ([]*menu.Menu, error)
 		Info(ctx context.Context, uid int) (gdb.Record, error)
 	}
 )
