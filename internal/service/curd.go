@@ -6,15 +6,15 @@
 package service
 
 import (
-	"Gf-Vben/internal/model"
 	"context"
+	"github.com/jinmao88/gf-utility/curd"
 
 	"github.com/jinmao88/gf-utility/response"
 )
 
 type (
 	ICurd interface {
-		Curd(ctx context.Context, r *model.CurdReq) (res *response.JsonRes, err error)
+		Curd(ctx context.Context, r *curd.CurdReq) (res *response.JsonRes, err error)
 	}
 )
 

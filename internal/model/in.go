@@ -2,10 +2,6 @@ package model
 
 //logic的入参
 
-type CurdReq struct {
-	Interface string `p:"i" v:"required"`
-	Action    string `p:"a" v:"required"`
-}
 type LoginReq struct {
 	Username string `json:"username" dc:"账号" v:"required"`
 	Password string `json:"password" dc:"密码" v:"required"`

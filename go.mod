@@ -6,7 +6,7 @@ require (
 	github.com/gogf/gf-jwt/v2 v2.0.1
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.4.0
 	github.com/gogf/gf/v2 v2.4.0
-	github.com/jinmao88/gf-utility v1.0.1
+	github.com/jinmao88/gf-utility v1.0.2
 	github.com/yitter/idgenerator-go v1.3.3
 )
 
