@@ -2,7 +2,7 @@
 gfcli:
   gen:
     dao:
-      - link:  "mysql:gf-vben:rdSWTt3dsLMTMHhE@tcp(114.115.157.254:3306)/gf-vben"
+      - link:  "mysql:vben:ZmdjwPdb3BBPsXhN@tcp(114.115.157.254:3306)/vben"
 
   build:
     name: "gf-vben"
