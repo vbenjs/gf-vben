@@ -63,7 +63,7 @@ func (s *sUser) Menu(ctx context.Context) ([]*menu.Menu, error) {
 	//	p = append(p, permission[2])
 	//}
 	var routers []*menu.Menu
-	if err := dao.Router.Ctx(ctx).Where(dao.Router.Columns().Status, 1).Order(dao.Router.Columns().Parent).Scan(&routers); err != nil {
+	if err := dao.Router.Ctx(ctx).Where(dao.Router.Columns().Status, 1).FieldsEx("delete_at").Order(dao.Router.Columns().Parent).Scan(&routers); err != nil {
 		return nil, err
 	}
 	return menu.BuildRouter(routers), nil
