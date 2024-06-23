@@ -105,7 +105,7 @@ func Authenticator(ctx context.Context) (interface{}, error) {
 	return g.Map{
 		"username": u.Username,
 		"uid":      u.Id,
-		"roles":    "admin",
+		"role":     u.Role,
 	}, nil
 
 }

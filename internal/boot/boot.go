@@ -1,11 +1,9 @@
 package boot
 
 import (
-	//casbin2 "Gf-Vben/internal/const/casbin"
 	_ "Gf-Vben/internal/logic"
 	_ "Gf-Vben/internal/router"
-	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
-	//adapter "github.com/jinmao88/gf-casbin"
+	_ "github.com/gogf/gf/contrib/drivers/pgsql/v2"
 	"github.com/yitter/idgenerator-go/idgen"
 )
 

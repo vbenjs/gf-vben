@@ -74,7 +74,7 @@ func (r *Req) Options() ([]curd.Option, error) {
 
 func (r *Req) Tree() (g.Map, error) {
 
-	var res []entity.Router
+	var res []Entity
 	if err := g.DB().Model("router").Where("status", 1).Order("parent").Scan(&res); err != nil {
 		return nil, err
 	}

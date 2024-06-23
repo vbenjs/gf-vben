@@ -13,6 +13,6 @@ logger:
   
 database:
   default:
-#     link:   "pgsql:user=gfvben password=JBprEMNHJ7Md host=47.116.71.73 port=5432 dbname=gfvben sslmode=disable"
-    link:  "mysql:vben:ZmdjwPdb3BBPsXhN@tcp(114.115.157.254:3306)/vben"
+    link:   "pgsql:vben:yW8sWipJXa26Hnh5@tcp(114.115.157.254:5432)/vben"
+#     link:  "mysql:vben:ZmdjwPdb3BBPsXhN@tcp(114.115.157.254:3306)/vben"
     debug:  true

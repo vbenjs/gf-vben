@@ -50,18 +50,8 @@ func (s *sUser) Register(ctx context.Context, in model.RegisterReq) error {
 	return nil
 }
 
-//type MenuReq struct {
-//	Uid string `p:"uid"`
-//	Ctx context.Context
-//}
-
 func (s *sUser) Menu(ctx context.Context) ([]*menu.Menu, error) {
-	//casbin.CE.LoadPolicy()
-	//var p []string
-	//permissions := casbin.CE.GetPermissionsForUserInDomain(r.Uid, "menu")
-	//for _, permission := range permissions {
-	//	p = append(p, permission[2])
-	//}
+
 	var routers []*menu.Menu
 	if err := dao.Router.Ctx(ctx).Where(dao.Router.Columns().Status, 1).FieldsEx("delete_at").Order(dao.Router.Columns().Parent).Scan(&routers); err != nil {
 		return nil, err

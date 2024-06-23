@@ -45,7 +45,7 @@ var routerColumns = RouterColumns{
 	Icon:      "icon",
 	Component: "component",
 	Parent:    "parent",
-	OrderNo:   "orderNo",
+	OrderNo:   "order_no",
 	Status:    "status",
 	CreateAt:  "create_at",
 	UpdateAt:  "update_at",

@@ -24,10 +24,7 @@ func (cCurd) Curd(ctx context.Context, req *curd.CurdReq) (res *response.JsonRes
 			cu = new(user.Req)
 		case "router":
 			cu = new(router.Req)
-		//case "role":
-		//	cu = new(role.Req)
-		//case "permission":
-		//cu = new(permission.Req)
+
 		default:
 			return nil, gerror.NewCode(response.Code(1), "接口参数错误")
 		}

@@ -30,7 +30,6 @@ func init() {
 				controller.User,
 			)
 		})
-		//group.Middleware(middleware.Casbin)
 		group.Bind(
 			controller.Curd,
 		)
