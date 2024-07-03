@@ -14,7 +14,7 @@ type RegisterReq struct {
 	model.RegisterReq
 }
 type InfoReq struct {
-	g.Meta `path:"/info" method:"get" summary:"通过Token获取用户信息"`
+	g.Meta `path:"/getUserInfo" method:"get" summary:"通过Token获取用户信息"`
 	Uid    int `p:"uid"`
 }
 

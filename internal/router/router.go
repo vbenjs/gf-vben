@@ -5,7 +5,6 @@ import (
 	"Gf-Vben/internal/middleware"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
-	"github.com/jinmao88/gf-utility/response"
 )
 
 // 你可以将路由注册放到一个文件中管理，
@@ -14,22 +13,23 @@ import (
 func init() {
 	s := g.Server()
 
-	s.Use(response.ResponseHandler, middleware.CORS)
-	s.Group("/", func(group *ghttp.RouterGroup) {
-		group.Map(g.Map{
-			"login":    controller.User.Login,
-			"register": controller.User.Register,
-		})
-		//group.Middleware(middleware.Auth)
+	s.Use(middleware.ResponseHandler, middleware.CORS)
 
-	})
 	s.Group("/api", func(group *ghttp.RouterGroup) {
-		group.Middleware(middleware.Auth)
-		group.Group("/user", func(group *ghttp.RouterGroup) {
-			group.Bind(
-				controller.User,
-			)
+		group.Group("/auth", func(rg *ghttp.RouterGroup) {
+			rg.Map(g.Map{
+				"login":    controller.User.Login,
+				"register": controller.User.Register,
+			})
 		})
+		group.Middleware(middleware.Auth)
+		group.Group("/auth", func(rg *ghttp.RouterGroup) {
+			rg.Map(g.Map{
+				"menu":        controller.User.Menu,
+				"getUserInfo": controller.User.Info,
+			})
+		})
+
 		group.Bind(
 			controller.Curd,
 		)

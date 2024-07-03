@@ -19,7 +19,7 @@ type cUser struct {
 func (cUser) Login(ctx context.Context, req *user.LoginReq) (res *response.JsonRes, err error) {
 	res = new(response.JsonRes)
 	token, _ := middleware.GfJWTMiddleware.LoginHandler(ctx)
-	res.Data = g.Map{"token": token}
+	res.Data = g.Map{"accessToken": token}
 	return
 }
 
