@@ -16,3 +16,4 @@ database:
     link:   "pgsql:vben:yW8sWipJXa26Hnh5@tcp(114.115.157.254:5432)/vben"
 #     link:  "mysql:vben:ZmdjwPdb3BBPsXhN@tcp(114.115.157.254:3306)/vben"
     debug:  true
+

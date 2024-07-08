@@ -7,8 +7,8 @@ gfcli:
 
   build:
     name: "gf-vben"
-    arch: "arm"
+    arch: "amd64"
     system: "linux"
     version: "v1.0.0"
-    output: "./bin"
+    path:   "./bin"
     extra: ""
