@@ -6,6 +6,5 @@ package logic
 
 import (
 	_ "Gf-Vben/internal/logic/example"
-	_ "Gf-Vben/internal/logic/router"
 	_ "Gf-Vben/internal/logic/user"
 )
