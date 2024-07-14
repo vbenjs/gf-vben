@@ -62,6 +62,7 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 // Using this function, by r.GetParam("id") get identity
 func IdentityHandler(ctx context.Context) interface{} {
 	claims := jwt.ExtractClaims(ctx)
+	g.RequestFromCtx(ctx).SetParamMap(claims)
 	return claims[GfJWTMiddleware.IdentityKey]
 }
 
@@ -106,6 +107,7 @@ func Authenticator(ctx context.Context) (interface{}, error) {
 		"username": u.Username,
 		"uid":      u.Id,
 		"role":     u.Role,
+		"roles":    u.Roles,
 	}, nil
 
 }
