@@ -42,3 +42,13 @@ func (cUser) Menu(ctx context.Context, req *user.MenuReq) (res *response.JsonRes
 
 	return
 }
+
+func (cUser) AccessCodes(ctx context.Context, req *user.AccessCodeReq) (res *response.JsonRes, err error) {
+	res = new(response.JsonRes)
+	codes, err := service.User().AccessCode(ctx, req.Role)
+	res.Data = g.Map{
+		"codes": codes,
+		"uid":   req.Uid,
+	}
+	return
+}

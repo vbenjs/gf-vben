@@ -71,3 +71,15 @@ func (s *sUser) Info(ctx context.Context, uid int) (gdb.Record, error) {
 
 	return one, nil
 }
+
+func (s *sUser) AccessCode(ctx context.Context, role int) ([]string, error) {
+	if role == 0 {
+		return nil, gerror.New("角色码错误")
+	}
+
+	return map[int][]string{
+		1: []string{"AC_100100", "AC_100110", "AC_100120", "AC_100010"},
+		2: []string{"AC_100010", "AC_100020", "AC_100030"},
+		3: []string{"AC_1000001", "AC_1000002"},
+	}[role], nil
+}

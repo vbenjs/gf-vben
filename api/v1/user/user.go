@@ -22,3 +22,9 @@ type MenuReq struct {
 	g.Meta `path:"/menu" method:"get" summary:"获取用户菜单"`
 	Uid    int `p:"uid"`
 }
+
+type AccessCodeReq struct {
+	g.Meta `path:"/getAccessCodes" method:"get" summary:"获取用户权限码"`
+	Uid    int `p:"uid"`
+	Role   int `p:"role"`
+}

@@ -25,8 +25,9 @@ func init() {
 		group.Middleware(middleware.Auth)
 		group.Group("/auth", func(rg *ghttp.RouterGroup) {
 			rg.Map(g.Map{
-				"menu":        controller.User.Menu,
-				"getUserInfo": controller.User.Info,
+				"menu":           controller.User.Menu,
+				"getUserInfo":    controller.User.Info,
+				"getAccessCodes": controller.User.AccessCodes,
 			})
 		})
 
