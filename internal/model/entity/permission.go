@@ -8,15 +8,13 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// User is the golang structure for table user.
-type User struct {
+// Permission is the golang structure for table permission.
+type Permission struct {
 	Id       int         `json:"id"       orm:"id"        ` //
-	Username string      `json:"username" orm:"username"  ` //
-	Password string      `json:"password" orm:"password"  ` //
-	Status   int         `json:"status"   orm:"status"    ` //
+	Name     string      `json:"name"     orm:"name"      ` //
+	Parent   int         `json:"parent"   orm:"parent"    ` //
+	Type     int         `json:"type"     orm:"type"      ` // 权限类型 1、权限域 2、权限组 3、权限操作
 	CreateAt *gtime.Time `json:"createAt" orm:"create_at" ` //
 	UpdateAt *gtime.Time `json:"updateAt" orm:"update_at" ` //
 	DeleteAt *gtime.Time `json:"deleteAt" orm:"delete_at" ` //
-	Role     int         `json:"role"     orm:"role"      ` //
-	Roles    string      `json:"roles"    orm:"roles"     ` //
 }
