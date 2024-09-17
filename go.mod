@@ -4,8 +4,8 @@ go 1.21
 
 require (
 	github.com/gogf/gf-jwt/v2 v2.1.0
-	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.7.2
-	github.com/gogf/gf/v2 v2.7.2
+	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.7.3
+	github.com/gogf/gf/v2 v2.7.3
 	github.com/jinmao88/gf-utility v1.0.4
 	github.com/yitter/idgenerator-go v1.3.3
 )
