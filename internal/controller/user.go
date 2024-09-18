@@ -2,7 +2,6 @@ package controller
 
 import (
 	"Gf-Vben/api/v1/user"
-	"Gf-Vben/internal/middleware"
 	"Gf-Vben/internal/service"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
@@ -14,13 +13,6 @@ var (
 )
 
 type cUser struct {
-}
-
-func (cUser) Login(ctx context.Context, req *user.LoginReq) (res *response.JsonRes, err error) {
-	res = new(response.JsonRes)
-	token, _ := middleware.GfJWTMiddleware.LoginHandler(ctx)
-	res.Data = g.Map{"accessToken": token}
-	return
 }
 
 func (cUser) Register(ctx context.Context, req *user.RegisterReq) (res *response.JsonRes, err error) {

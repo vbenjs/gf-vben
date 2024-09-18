@@ -44,7 +44,7 @@ func (s *sUser) Register(ctx context.Context, in model.RegisterReq) error {
 		Password: pw,
 		Status:   1,
 	}
-	if _, err := dao.User.Ctx(ctx).Insert(u); err != nil {
+	if _, err := dao.User.Ctx(ctx).OmitEmptyData().Insert(u); err != nil {
 		return err
 	}
 	return nil
@@ -60,7 +60,6 @@ func (s *sUser) Menu(ctx context.Context) ([]*menu.Menu, error) {
 }
 
 func (s *sUser) Info(ctx context.Context, uid int) (gdb.Record, error) {
-
 	one, err := dao.User.Ctx(ctx).Where(dao.User.Columns().Id, uid).FieldsEx(dao.User.Columns().Password).One()
 	if err != nil {
 		return nil, err
@@ -78,8 +77,8 @@ func (s *sUser) AccessCode(ctx context.Context, role int) ([]string, error) {
 	}
 
 	return map[int][]string{
-		1: []string{"AC_100100", "AC_100110", "AC_100120", "AC_100010"},
-		2: []string{"AC_100010", "AC_100020", "AC_100030"},
-		3: []string{"AC_1000001", "AC_1000002"},
+		1: {"AC_100100", "AC_100110", "AC_100120", "AC_100010"},
+		2: {"AC_100010", "AC_100020", "AC_100030"},
+		3: {"AC_1000001", "AC_1000002"},
 	}[role], nil
 }

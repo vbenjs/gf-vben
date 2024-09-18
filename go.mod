@@ -1,12 +1,12 @@
 module Gf-Vben
 
-go 1.21
+go 1.23
 
 require (
-	github.com/gogf/gf-jwt/v2 v2.1.0
+	github.com/goflyfox/gtoken v1.5.10
 	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.7.3
 	github.com/gogf/gf/v2 v2.7.3
-	github.com/jinmao88/gf-utility v1.0.4
+	github.com/jinmao88/gf-utility v1.0.6
 	github.com/yitter/idgenerator-go v1.3.3
 )
 
@@ -18,7 +18,6 @@ require (
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/golang-jwt/jwt/v4 v4.3.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.1 // indirect
 	github.com/grokify/html-strip-tags-go v0.1.0 // indirect
@@ -38,3 +37,5 @@ require (
 	golang.org/x/text v0.16.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+//replace github.com/goflyfox/gtoken v1.5.10 => d:/golang/gtoken
