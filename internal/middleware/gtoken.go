@@ -51,6 +51,7 @@ func LoginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 			"accessToken": respData.GetString("token"),
 		})
 	}
+
 	response.JsonExit(r, -1, respData.Msg, respData.Data)
 }
 func AuthAfterFunc(r *ghttp.Request, respData gtoken.Resp) {

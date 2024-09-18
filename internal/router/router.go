@@ -20,6 +20,7 @@ func init() {
 		LoginPath:        "/auth/login",
 		LoginBeforeFunc:  middleware.Login,
 		LogoutPath:       "/auth/logout",
+		MultiLogin:       true,
 		AuthExcludePaths: g.SliceStr{"/api/auth/register"},
 		LoginAfterFunc:   middleware.LoginAfterFunc,
 		AuthAfterFunc:    middleware.AuthAfterFunc,
