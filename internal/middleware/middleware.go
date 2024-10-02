@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/jinmao88/gf-utility/response"
@@ -61,7 +60,6 @@ func ResponseHandler(r *ghttp.Request) {
 		return
 	}
 	gconv.Scan(res, &resp)
-	g.Dump(res, resp)
 	r.Response.WriteJson(resp)
 
 }
