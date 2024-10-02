@@ -46,13 +46,15 @@ func Login(r *ghttp.Request) (string, interface{}) {
 }
 
 func LoginAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
+	res := new(Resp)
 	if respData.Success() {
-		response.JsonExit(r, 0, "登录成功", g.Map{
+		res.Format(0, "登录成功", g.Map{
 			"accessToken": respData.GetString("token"),
-		})
-	}
+		}).JsonExit(r)
 
-	response.JsonExit(r, -1, respData.Msg, respData.Data)
+	}
+	res.Format(-1, respData.Msg, respData.Data).JsonExit(r)
+
 }
 func AuthAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	if respData.Success() {
@@ -61,6 +63,5 @@ func AuthAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 		r.Middleware.Next()
 		return
 	}
-	response.JsonExit(r, respData.Code, respData.Msg, respData.Data)
-
+	new(Resp).Format(respData.Code, respData.Msg, respData.Data).JsonExit(r)
 }

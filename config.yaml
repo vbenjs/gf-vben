@@ -1,7 +1,7 @@
 server:
   address:     ":10088"
-  openapiPath: "/api.json"
-  swaggerPath: "/swagger"
+#   openapiPath: "/api.json"
+#   swaggerPath: "/swagger"
   accessLogEnabled: false
   errorLogEnabled: false
   DumpRouterMap : true

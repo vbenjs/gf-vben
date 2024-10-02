@@ -6,7 +6,7 @@ require (
 	github.com/goflyfox/gtoken v1.5.10
 	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.7.4
 	github.com/gogf/gf/v2 v2.7.4
-	github.com/jinmao88/gf-utility v1.0.6
+	github.com/jinmao88/gf-utility v1.0.9
 	github.com/yitter/idgenerator-go v1.3.3
 )
 
